@@ -1,0 +1,37 @@
+{
+    "name": "Lyj",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "tilemaps": "github:microsoft/pxt-tilemaps#v1.10.0",
+        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.0",
+        "Timers": "github:microsoft/arcade-timers#v1.1.0",
+        "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.24",
+        "settings-blocks": "github:microsoft/pxt-settings-blocks#v1.0.0",
+        "arcade-minimap": "github:microsoft/arcade-minimap#v0.6.1",
+        "animation": "*"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "tilemap.g.jres",
+        "tilemap.g.ts",
+        "main.py"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "branch": "v1.2.16",
+        "tag": "v1.2.16",
+        "commits": "https://github.com/microsoft/pxt-arcade/commits/971a86b03314f200ceb1a951ad277d1d6b8c1e23",
+        "target": "1.2.16",
+        "pxt": "6.2.30",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "blocksprj"
+}
