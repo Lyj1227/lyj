@@ -510,7 +510,7 @@ scene.onHitWall(SpriteKind.subordinate, function (sprite, location) {
             . a 3 3 3 3 3 3 a 3 a a a a . . 
             . . a a a a a a a a a a . . . . 
             `)
-        sprite.vx = snails.vx * -1
+        sprite.vx = sprite.vx * -1
     } else if (sprite.image.equals(img`
         . . . . . . . . . . . . . . . . 
         . . . a a . . . . . . . . . . . 
@@ -547,7 +547,7 @@ scene.onHitWall(SpriteKind.subordinate, function (sprite, location) {
             . . a a a a 3 a 3 3 3 3 3 3 a . 
             . . . . a a a a a a a a a a . . 
             `)
-        sprite.vx = snails.vx * -1
+        sprite.vx = sprite.vx * -1
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
