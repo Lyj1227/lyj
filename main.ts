@@ -10,6 +10,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.subordinate, function (sprite, o
         info.changeLifeBy(0)
     }
 })
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    doSomething(woodcutter, true, 60)
+    doSomething(woodcutter, false, 40)
+})
 function Roles_Set_2 () {
     Magnifying_glass = sprites.create(img`
         f f f f f f f f f . 
@@ -121,24 +125,30 @@ function Player_attack () {
         woodcutter.x += -1
     }
 }
-function mob_direction (dr: boolean) {
-    if (dr) {
-        if (snails.isHittingTile(CollisionDirection.Right)) {
-            snails.vx = -20
-        } else if (snails.isHittingTile(CollisionDirection.Left)) {
-            snails.vx = 20
-        } else if (snails.isHittingTile(CollisionDirection.Bottom)) {
-            snails.vy = -20
-        } else if (snails.isHittingTile(CollisionDirection.Top)) {
-            snails.vy = 20
-        }
-    } else {
-        if (snails.isHittingTile(CollisionDirection.Right)) {
-            snails.vx = -20
-        } else if (snails.isHittingTile(CollisionDirection.Left)) {
-            snails.vx = 20
+function doSomething (woodcutter: Sprite, bool: boolean, num: number) {
+    if (bool) {
+        range2 = num - woodcutter.y
+        direction = Math.sin(-1000)
+        // 確認方向
+        direction2 = Math.sin(1000)
+        for (let index = 0; index < Math.abs(range2); index++) {
+            woodcutter.y += direction
+            woodcutter.x += direction2
+            pause(10)
         }
     }
+    if (!(bool)) {
+        range2 = num - woodcutter.y
+        direction = Math.sin(1000)
+        // 確認方向
+        direction2 = Math.sin(1000)
+        for (let index = 0; index < Math.abs(range2); index++) {
+            woodcutter.y += direction
+            woodcutter.x += direction2
+            pause(10)
+        }
+    }
+    return
 }
 function Roles_Set_Main () {
     woodcutter = sprites.create(img`
@@ -607,7 +617,9 @@ function Level_cheak (Level_Number: number) {
 let projectile: Sprite = null
 let energy: Sprite = null
 let levels: tiles.WorldMap[] = []
-let snails: Sprite = null
+let direction2 = 0
+let direction = 0
+let range2 = 0
 let projectile2: Sprite = null
 let princess: Sprite = null
 let demon: Sprite = null
@@ -616,6 +628,26 @@ let Magnifying_glass: Sprite = null
 let woodcutter: Sprite = null
 let snails_kill = 0
 let skill = 0
+let snails : Sprite = null
+function mob_direction(dr: any) {
+    if (dr) {
+        if (snails.isHittingTile(CollisionDirection.Right)) {
+            snails.vx = -20
+        } else if (snails.isHittingTile(CollisionDirection.Left)) {
+            snails.vx = 20
+        } else if (snails.isHittingTile(CollisionDirection.Bottom)) {
+            snails.vy = -20
+        } else if (snails.isHittingTile(CollisionDirection.Top)) {
+            snails.vy = 20
+        }
+        
+    } else if (snails.isHittingTile(CollisionDirection.Right)) {
+        snails.vx = -20
+    } else if (snails.isHittingTile(CollisionDirection.Left)) {
+        snails.vx = 20
+    }
+    
+}
 info.setScore(0)
 info.setLife(3)
 skill = 0
