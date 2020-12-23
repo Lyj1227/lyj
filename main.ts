@@ -5,6 +5,25 @@ namespace SpriteKind {
     export const Magnifying = SpriteKind.create()
     export const Map = SpriteKind.create()
 }
+namespace ConnectionKind {
+    export const T1 = ConnectionKind.create()
+    export const T2 = ConnectionKind.create()
+    export const T3 = ConnectionKind.create()
+    export const T4 = ConnectionKind.create()
+    export const T5 = ConnectionKind.create()
+    export const T6 = ConnectionKind.create()
+    export const T7 = ConnectionKind.create()
+    export const T8 = ConnectionKind.create()
+    export const T9 = ConnectionKind.create()
+    export const T10 = ConnectionKind.create()
+    export const T11 = ConnectionKind.create()
+    export const T12 = ConnectionKind.create()
+    export const T13 = ConnectionKind.create()
+    export const T14 = ConnectionKind.create()
+    export const T15 = ConnectionKind.create()
+    export const T16 = ConnectionKind.create()
+    export const T17 = ConnectionKind.create()
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.subordinate, function (sprite, otherSprite) {
     if (otherSprite.y - 10 > sprite.y) {
         otherSprite.destroy()
@@ -12,30 +31,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.subordinate, function (sprite, o
     } else {
         woodcutter.startEffect(effects.trail, 500)
         statusbar2.value += -1
-        info.changeLifeBy(0)
+        info.changeLifeBy(-1)
         pause(500)
     }
 })
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    JUMP(woodcutter, true, 30)
-    JUMP(woodcutter, false, 20)
-})
-function Roles_Set_2 () {
-    Magnifying_glass = sprites.create(img`
-        f f f f f f f f f . 
-        f 1 1 1 1 1 1 f f . 
-        f 1 . . . . 1 f f . 
-        f 1 . 1 1 . 1 f f . 
-        f 1 . . . . 1 f f . 
-        f 1 1 1 1 1 1 f f . 
-        f f f f f f f f f . 
-        . . . . . . . f f . 
-        . . . . . . . f f . 
-        . . . . . . . f f . 
-        `, SpriteKind.Magnifying)
-    Magnifying_glass.z = 0
-    Magnifying_glass.destroy()
-}
 function Player_attack () {
     let lv = 0
     if (lv == 12 && woodcutter.overlapsWith(demon)) {
@@ -44,17 +43,69 @@ function Player_attack () {
         woodcutter.y += 3
     }
     if (statusbar.value == 20 && controller.B.isPressed()) {
-        projectile2 = sprites.createProjectileFromSprite(img`
-            . . b b b b . . 
-            . b 5 5 5 5 b . 
-            b 5 d 3 3 d 5 b 
-            b 5 3 5 5 1 5 b 
-            c 5 3 5 5 1 d c 
-            c d d 1 1 d d c 
-            . f d d d d f . 
-            . . f f f f . . 
-            `, woodcutter, 50, 0)
-        woodcutter.x += -0.5
+        if (woodcutter.image.equals(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . f f f f f f . . . . . . 
+            . . f f 5 5 5 5 9 c f . . . . . 
+            . f f 5 5 5 5 9 c c c f . . . . 
+            . f 5 5 5 9 9 5 5 5 5 f . . . . 
+            . f 9 9 9 5 5 c c c c 5 f . 8 8 
+            . f 5 c c c f f f f 5 c f 8 9 8 
+            f f f f f f f a a a f f 8 9 9 8 
+            f f d a a a f 1 d a a 8 9 9 8 . 
+            f d d a a d f f d d f 8 9 8 . . 
+            . f d d a d d d d f f 8 8 8 . . 
+            . . f f d d d d f c f d f . . . 
+            . . . f c c c c c c f f . . . . 
+            . . . f e 2 e 2 e 2 f . . . . . 
+            . . . f 4 4 4 4 4 4 f . . . . . 
+            . . . . f f f f f f . . . . . . 
+            `)) {
+            projectile = sprites.createProjectileFromSprite(img`
+                . . b b b b . . 
+                . b 5 5 5 5 b . 
+                b 5 d 3 3 d 5 b 
+                b 5 3 5 5 1 5 b 
+                c 5 3 5 5 1 d c 
+                c d d 1 1 d d c 
+                . f d d d d f . 
+                . . f f f f . . 
+                `, woodcutter, 50, 0)
+            woodcutter.x += -0.5
+        }
+        if (woodcutter.image.equals(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . f f f f f f . . . . . 
+            . . . . f 2 f e e e e f f . . . 
+            . . . f 2 2 2 f e e e e f f . . 
+            . . . f e e e e f f e e e f . . 
+            . . f e 2 2 2 2 e e f f f f . . 
+            . . f 2 e f f f f 2 2 2 e f . . 
+            . . f f f e e e f f f f f f f . 
+            . . f e e 4 4 f b e 4 4 e f f . 
+            . . f f e d d f 1 4 d 4 e e f . 
+            . f d d f d d d d 4 e e e f . . 
+            . f b b f e e e 4 e e f . . . . 
+            . f b b e d d 4 2 2 2 f . . . . 
+            . . f b e d d e 4 4 4 f f . . . 
+            . . . f f e e f f f f f f . . . 
+            . . . . f f f . . . f f . . . . 
+            `)) {
+            projectile = sprites.createProjectileFromSprite(img`
+                . . b b b b . . 
+                . b 5 5 5 5 b . 
+                b 5 d 3 3 d 5 b 
+                b 5 3 5 5 1 5 b 
+                c 5 3 5 5 1 d c 
+                c d d 1 1 d d c 
+                . f d d d d f . 
+                . . f f f f . . 
+                `, woodcutter, -50, 0)
+            woodcutter.x += 0.5
+        }
+        if (projectile.overlapsWith(demon)) {
+            boss_HP += -2
+        }
         statusbar.value = 0
     }
 }
@@ -79,6 +130,76 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 function 圖像擋專區 () {
+    Magnifying_glass = sprites.create(img`
+        f f f f f f f f f . 
+        f 1 1 1 1 1 1 f f . 
+        f 1 . . . . 1 f f . 
+        f 1 . 1 1 . 1 f f . 
+        f 1 . . . . 1 f f . 
+        f 1 1 1 1 1 1 f f . 
+        f f f f f f f f f . 
+        . . . . . . . f f . 
+        . . . . . . . f f . 
+        . . . . . . . f f . 
+        `, SpriteKind.Magnifying)
+    Magnifying_glass.z = 0
+    Magnifying_glass.destroy()
+    demon = sprites.create(img`
+        .......ffffffff.......
+        .......f22bbbbf.......
+        .....fff22bbbbff......
+        .....f22222bbbbf......
+        .....fbb2222222fff....
+        ....ffb2222222222ff...
+        ...f222222222222222f..
+        ..f2222f1222f122222f..
+        ..f2222ff222ff22222f..
+        ..f2222222222222222f..
+        ..f2333222222233322f..
+        ..f2333222222233322f..
+        ..f2222222222222222f..
+        ...ff222222222222ff...
+        ....ffffffffffffff....
+        .....f1f5f15f1f5f.....
+        ..ffffffffffffffffff..
+        .fbbbbbf1f51f5fcccccf.
+        fbbfbbbffffffffccffccf
+        fbbfbffcf2222fbfcffccf
+        fbbfbffcf2222fbfcffccf
+        fbbfbfcccf22fbbfccfccf
+        .fbfbffcff22ffbfcffcf.
+        ..ffffff222222ffffff..
+        ...f.ff22222222f2ff2f.
+        .......f22222222222f..
+        .......f222222222ff...
+        ........ffff22222f....
+        ...........ff222f.....
+        .............ff2f.....
+        ..............ff......
+        ...............ff.....
+        `, SpriteKind.Enemy)
+    demon.destroy()
+    demon.z = 2
+    princess = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . 3 . 3 . . . . . . 
+        . . . . . . f 3 9 3 f . . . . . 
+        . . . . . f 5 2 2 2 5 f . . . . 
+        . . . . f 5 5 5 5 1 5 5 f . . . 
+        . . . . f 5 5 5 5 5 1 5 f . . . 
+        . . . . f d f d 5 5 5 1 f . . . 
+        . . . . f d f d 5 5 5 5 f f . . 
+        . . . . f d d 3 d 5 5 5 f 5 f . 
+        . . . . . f d d d f f 5 5 f . . 
+        . . . . . . f f 9 9 f f 5 5 f . 
+        . . . . . f 3 3 3 f d f f 5 f . 
+        . . . . . f 3 3 3 f d d f f . . 
+        . . . . . . f 9 9 f f f . . . . 
+        . . . . . f 3 3 3 3 f . . . . . 
+        . . . . . f f f f f f . . . . . 
+        `, SpriteKind.hostage)
+    princess.destroy()
+    princess.z = 1
     mySprite = [
     sprites.create(img`
         ..................................................
@@ -450,29 +571,23 @@ function 圖像擋專區 () {
 }
 function JUMP (woodcutter: Sprite, bool: boolean, num: number) {
     if (bool) {
-        range2 = num - woodcutter.y
-        direction = Math.sin(-1000)
-        // 確認方向
-        direction2 = Math.sin(1000)
-        for (let index = 0; index < Math.abs(range2); index++) {
-            woodcutter.y += direction
-            woodcutter.x += direction2
-            pause(10)
+        for (let index = 0; index < Math.abs(num); index++) {
+            woodcutter.y += Math.sin(-1000)
+            pause(5)
         }
     }
     if (!(bool)) {
-        range2 = num - woodcutter.y
-        direction = Math.sin(1000)
-        // 確認方向
-        direction2 = Math.sin(1000)
-        for (let index = 0; index < Math.abs(range2); index++) {
-            woodcutter.y += direction
-            woodcutter.x += direction2
-            pause(10)
+        for (let index = 0; index < Math.abs(num); index++) {
+            woodcutter.y += Math.sin(1000)
+            pause(5)
         }
     }
     return
 }
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    JUMP(woodcutter, true, 45)
+    JUMP(woodcutter, false, 45)
+})
 scene.onHitWall(SpriteKind.subordinate, function (sprite, location) {
     if (sprite.image.equals(img`
         . . . . . . . . . . . . . . . . 
@@ -550,6 +665,44 @@ scene.onHitWall(SpriteKind.subordinate, function (sprite, location) {
         sprite.vx = sprite.vx * -1
     }
 })
+function Roles_Set () {
+    woodcutter = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . f f f f f f . . . . . . 
+        . . f f 5 5 5 5 9 c f . . . . . 
+        . f f 5 5 5 5 9 c c c f . . . . 
+        . f 5 5 5 9 9 5 5 5 5 f . . . . 
+        . f 9 9 9 5 5 c c c c 5 f . 8 8 
+        . f 5 c c c f f f f 5 c f 8 9 8 
+        f f f f f f f a a a f f 8 9 9 8 
+        f f d a a a f 1 d a a 8 9 9 8 . 
+        f d d a a d f f d d f 8 9 8 . . 
+        . f d d a d d d d f f 8 8 8 . . 
+        . . f f d d d d f c f d f . . . 
+        . . . f c c c c c c f f . . . . 
+        . . . f e 2 e 2 e 2 f . . . . . 
+        . . . f 4 4 4 4 4 4 f . . . . . 
+        . . . . f f f f f f . . . . . . 
+        `, SpriteKind.Player)
+    woodcutter.setFlag(SpriteFlag.ShowPhysics, true)
+    woodcutter.z = 1
+    controller.moveSprite(woodcutter)
+    scene.cameraFollowSprite(woodcutter)
+    tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0])
+    statusbar = statusbars.create(1, 16, StatusBarKind.Energy)
+    statusbar.attachToSprite(woodcutter, 3, 0)
+    statusbar.setColor(9, 0)
+    statusbar.value = 0
+    statusbar.max = 20
+    statusbar.positionDirection(CollisionDirection.Left)
+    statusbar2 = statusbars.create(2, 16, StatusBarKind.Health)
+    statusbar2.attachToSprite(woodcutter, 1, 0)
+    statusbar2.setColor(2, 0)
+    statusbar2.value = info.life()
+    statusbar2.max = info.life()
+    statusbar2.positionDirection(CollisionDirection.Left)
+    tiles.setTileAt(tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0], myTiles.transparency16)
+}
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     woodcutter.setImage(img`
         . . . . . . . . . . . . . . . . 
@@ -570,43 +723,6 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . f f f f f f . . . . . . 
         `)
 })
-function Roles_Set_Main () {
-    woodcutter = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . f f f f f f . . . . . . 
-        . . f f 5 5 5 5 9 c f . . . . . 
-        . f f 5 5 5 5 9 c c c f . . . . 
-        . f 5 5 5 9 9 5 5 5 5 f . . . . 
-        . f 9 9 9 5 5 c c c c 5 f . 8 8 
-        . f 5 c c c f f f f 5 c f 8 9 8 
-        f f f f f f f a a a f f 8 9 9 8 
-        f f d a a a f 1 d a a 8 9 9 8 . 
-        f d d a a d f f d d f 8 9 8 . . 
-        . f d d a d d d d f f 8 8 8 . . 
-        . . f f d d d d f c f d f . . . 
-        . . . f c c c c c c f f . . . . 
-        . . . f e 2 e 2 e 2 f . . . . . 
-        . . . f 4 4 4 4 4 4 f . . . . . 
-        . . . . f f f f f f . . . . . . 
-        `, SpriteKind.Player)
-    woodcutter.z = 1
-    controller.moveSprite(woodcutter)
-    scene.cameraFollowSprite(woodcutter)
-    tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0])
-    statusbar = statusbars.create(1, 16, StatusBarKind.Energy)
-    statusbar.attachToSprite(woodcutter, 2, 0)
-    statusbar.setColor(9, 0)
-    statusbar.value = 0
-    statusbar.max = 20
-    statusbar.positionDirection(CollisionDirection.Left)
-    statusbar2 = statusbars.create(1, 16, StatusBarKind.Energy)
-    statusbar2.attachToSprite(woodcutter, 1, 0)
-    statusbar2.setColor(2, 0)
-    statusbar2.value = info.life()
-    statusbar2.max = info.life()
-    statusbar2.positionDirection(CollisionDirection.Left)
-    tiles.setTileAt(tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0], myTiles.transparency16)
-}
 function Mob_Set () {
     for (let value2 of tiles.getTilesByType(sprites.dungeon.collectibleRedCrystal)) {
         snails = sprites.create(img`
@@ -696,6 +812,353 @@ function Mob_Set () {
         tiles.setTileAt(value, myTiles.transparency16)
     }
 }
+function Level_set () {
+    let list: tiles.WorldMap[] = []
+    levels = [
+    tiles.createMap(tiles.createTilemap(hex`1000100004020202020202020204040402020204020701010102070101020202020c0204020102020101010101010201010102020201020c020d02010201010101010102020102010102010102010202020201020202010201010101020102010a020102020e010102010201020202010202010202020201010102010101010102010102020c020202020c02010209010102020202010101010101010102020201010102040202020201020101010b020201020204030404020102010209010102010102030404020101020102020201020201020202020201020101020402010202010202070101010108020204020d0802010602050202020202020403020202020202`, img`
+        . 2 2 2 2 2 2 2 2 . . . 2 2 2 . 
+        2 . . . . 2 . . . 2 2 2 2 . 2 . 
+        2 . 2 2 . . . . . . 2 . . . 2 2 
+        2 . 2 . 2 . 2 . 2 . . . . . . 2 
+        2 . 2 . . 2 . . 2 . 2 2 2 2 . 2 
+        2 2 . 2 . . . . 2 . 2 . . 2 . 2 
+        2 . . . 2 . 2 . 2 2 2 . 2 2 . 2 
+        2 2 2 . . . 2 . . . . . 2 . . 2 
+        2 . 2 2 2 2 . 2 . 2 . . . 2 2 2 
+        2 . . . . . . . . 2 2 2 . . . 2 
+        . 2 2 2 2 . 2 . . . . 2 2 . 2 2 
+        . . . . 2 . 2 . 2 . . . 2 . . 2 
+        . . . 2 . . 2 . 2 2 2 . 2 2 . 2 
+        2 2 2 2 . 2 . . 2 . 2 . 2 2 . 2 
+        2 . . . . . . 2 2 . 2 . . 2 . . 
+        2 . 2 2 2 2 2 2 . . 2 2 2 2 2 2 
+        `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,sprites.dungeon.doorLockedEast,sprites.castle.tilePath1,sprites.castle.tilePath9,sprites.castle.tilePath7,sprites.castle.tilePath6,sprites.castle.tilePath3,sprites.castle.tilePath2,sprites.castle.tilePath8,sprites.castle.tilePath4], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005060006050607000000000000000602020200020202020000000000000002000000000001010100000000000502000000000000000000000000000002000000060600000000000000000602000005060202060600000000000002000006020201010202000000040006060006020101010101010506000202020202020103010103030102020701010101010101010101020201010102030303030303030303030101030303030201010101010202020201010101010101030101030101010303010103010301`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . 2 2 2 . 2 2 2 2 
+        . . . . . . . 2 . . . . . 2 2 2 
+        . . . . . . 2 . . . . . . . . . 
+        . . . . . 2 . . . . . . . . . . 
+        . . . . 2 . . . . 2 2 . . . . . 
+        . . . 2 . . . 2 2 . . 2 2 . . . 
+        . . . . . . 2 . . . . . 2 . . . 
+        2 2 2 2 2 2 . . . . . . . 2 2 . 
+        . . . . . . . . . . . . . . . 2 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.castle.tilePath2,sprites.castle.tileGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleRedCrystal,tiles.util.arrow5,myTiles.tile3], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000a000000000000000000000900000009090000000a090909000000000909090900090909090900000000000000000000000000000000000009000d0000000000000000000000000000090900000000000000000000000000000000000000000000000000000000000000000000000000020a0202000000000b00000c0000000201010803020002020200000202020201030104010b02010401000d010408010b0701010b0106010107020203010103010108030105010305010805010b05010104010107010106010b0104`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        2 . . . 2 2 . . . . 2 2 2 . . . 
+        . 2 2 2 2 . 2 2 2 2 2 . . . . . 
+        . . . . . . . . . . . . . 2 . . 
+        . . . . . . . . . . . . . . 2 2 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . 2 . 2 2 . . . . . . . 
+        . . . . 2 . 2 . . 2 . 2 2 2 . . 
+        2 2 2 2 . . . . . . 2 . . 2 . . 
+        . . . . . . . . . . . . . . 2 2 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileGrass1,sprites.castle.tileDarkGrass1,sprites.castle.tileDarkGrass3,sprites.castle.tileGrass2,sprites.builtin.brick,sprites.castle.saplingPine,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`100010000000060000000000000600000000000000000000000006000000000600000000000006000006000000000000000000000000000000000000000000000000000e00000000000000000000000003070707000000000000000003070707070404040d07070700000000070404040404000007000000000707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000601010100000000010100000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
+        . . 2 . . . . . . 2 . . . . . . 
+        . . . . . . 2 . . . . 2 . . . . 
+        . . 2 . . 2 . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . 2 2 2 
+        . . . . . . . . . 2 2 2 2 2 2 2 
+        . 2 2 2 . . . . 2 2 2 2 2 2 . . 
+        2 . . . . 2 2 2 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . 2 2 2 2 . . . . 2 2 . . 
+        . . . 2 . . . . 2 . . . . . . . 
+        2 2 2 2 . . . . . 2 2 2 . . . . 
+        . . . . . . . . . . . . 2 2 2 . 
+        . . . . . . . . . . . . . . . 2 
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`100010000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a00000000000000000000000000000a000000000000000000000000000000000c0000000000000000000000000000000700000007000708000000070000000d000707070908090807000700070007070008080900000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d00000000000000000000000000000101000000000001010000000000010103030c000002010303010000020103030b0b0101010103030b0301010103030b03030603030305060503030303050605030604030403040404030403030404040304`, img`
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+        2 . . . . . . . . . . . . . . 2 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        2 . . . 2 . 2 2 . . . 2 . . . . 
+        . 2 2 2 2 2 2 2 2 . 2 . 2 . 2 2 
+        . 2 2 2 . . . 2 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . 2 2 
+        . . . . . 2 2 . . . . . 2 2 . . 
+        . . . . 2 . . 2 . . . 2 . . . . 
+        2 2 2 2 . . . . 2 2 2 . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.builtin.oceanDepths8,sprites.builtin.coral2,sprites.builtin.oceanDepths4,sprites.castle.tilePath5,sprites.castle.tileDarkGrass3,sprites.builtin.forestTiles0,sprites.castle.tilePath2,sprites.castle.rock1,sprites.castle.rock0,sprites.castle.rock2,sprites.castle.shrub,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`10001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c00000000040000000000000000000004040404040504000000000000000d00000000050500000004000b050404000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c00010101000000000101020000000001010307030101000103020301000000070a080303030002090301030a01010d0303060a0308010103030608030703010903030308030a0309030a030a03030703060309030303060308030306030903080303030708030a0307030a03030807`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 2 . . . . . . . . . 
+        . 2 2 2 2 2 2 2 . . . . . . . . 
+        . . . . 2 2 . . . 2 . 2 2 2 2 . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . 2 2 2 . . . . 2 2 2 . . . . 
+        2 2 . . . 2 2 . 2 . . . 2 . . . 
+        . . . . . . . 2 . . . . . 2 2 . 
+        . . . . . . . . . . . . . . . 2 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tilePath5,sprites.builtin.coral2,sprites.castle.rock0,sprites.castle.saplingOak,sprites.castle.saplingPine,sprites.castle.shrub,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`100010000000060000000000000600000000000000000000000006000000000600000000000006000006000000000000000000000000000000000000000000000000000e000000000000000000000000030707070d0000000000000003070707070404040707070700000000070404040404000000000000000707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000601010100000000010100000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
+        . . 2 . . . . . . 2 . . . . . . 
+        . . . . . . 2 . . . . 2 . . . . 
+        . . 2 . . 2 . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . 2 2 2 
+        . . . . . . . . . 2 2 2 2 2 2 2 
+        2 2 2 2 . . . . 2 2 2 2 2 2 . . 
+        . . . . . 2 2 2 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . 2 . . . . . . . . . . . 
+        . . . . 2 2 2 2 . . . . 2 2 . . 
+        . . . 2 . . . . 2 . . . . . . . 
+        2 2 2 . . . . . . 2 2 2 . . . . 
+        . . . . . . . . . . . . 2 2 2 . 
+        . . . . . . . . . . . . . . . 2 
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c0b0000000a0009090a00000000000a090900000a0a0000000a0009090909000a00000a0a0000000000000909000a000a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001010101000000000000000000000001020802020101000000000b0000010108080508080408020000000101010808040304030806080101000c0106050406080408080408050802010106020705080303030303080406080506`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . 2 . 2 2 2 . . . . . 2 2 
+        2 . . 2 2 . . . 2 . 2 2 2 2 . 2 
+        . . 2 2 . . . . . . 2 2 . 2 . 2 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 2 2 2 2 . . . . . . 
+        . . . . . 2 . . . . 2 2 . . . . 
+        . . . 2 2 . . . . . . . 2 . . . 
+        2 2 2 . . . . . . . . . 2 2 . . 
+        . . . . . . . . . . . . . . 2 2 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.castle.tileGrass1,sprites.castle.tileGrass3,sprites.builtin.coral2,sprites.castle.rock1,sprites.castle.rock2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000060600000000000000000000000000000000060000000000000600000000000800000006000600060600060006000606000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000606000000000000060600000000060203050405000000000603030204050105010105010501000803010203050202010102010201050304`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        2 2 . . . . . . . . . . . . . . 
+        . . 2 . . . . . . 2 . . . . . . 
+        . . . 2 . 2 . 2 2 . 2 . 2 . 2 2 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . 2 2 . . . . . . 
+        2 2 . . . . 2 2 . . 2 2 . . . . 
+        . . 2 2 2 2 . . . . . . 2 2 . . 
+        . . . . . . . . . . . . . . 2 2 
+        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.castle.tileGrass1,sprites.builtin.coral2,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000010100000000010000000000000000000000010001010001000000000000000000000000000000000100010000000000000000000000000000000001000000000000000000000000000000000100000000000000000000000000000000010006000000000000000000000000000001010000000000000000000000000000000005000001000000000000000000000000010101010100000000000101000000060403020304010100010103040101010101020103020103010203040302010301`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        2 2 . . . . 2 . . . . . . . . . 
+        . . 2 . 2 2 . 2 . . . . . . . . 
+        . . . . . . . . 2 . 2 . . . . . 
+        . . . . . . . . . . . 2 . . . . 
+        . . . . . . . . . . . . 2 . . . 
+        . . . . . . . . . . . . . 2 . . 
+        . . . . . . . . . . . . . . 2 2 
+        . . . . . . . . . . . . . . . . 
+        . . . 2 . . . . . . . . . . . . 
+        2 2 2 . 2 . . . . . 2 2 2 . . . 
+        . . . . . 2 2 2 2 2 . . 2 2 2 2 
+        . . . . . . . 2 . . . . . . . . 
+        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.rock1,sprites.castle.rock2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000100000000000000000000000000000100000000000000000000000101000100000000000101000101010000000100000007000105050106020601010000000008010105020404050205050401000001010504030202040303040305060101060102030605030602060503040205030205`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 2 
+        . . . . . . . . . . . . . . 2 . 
+        . . . . . . . . . . 2 2 . 2 . . 
+        . . . 2 2 . 2 2 2 . . . 2 . . . 
+        . . 2 . . 2 . . . 2 2 . . . . . 
+        2 2 . . . . . . . . . 2 . . 2 2 
+        . . . . . . . . . . . . 2 2 . 2 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.dungeon.darkGroundNorth,sprites.builtin.forestTiles0,sprites.castle.rock2,sprites.castle.rock1,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000003030707000000000000000003030703070404040d03030300000003070404040404000007000000000703070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000601010100000000000000000d0000010b0c050a010000000000000e01010102060206020501010100000008050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . 2 2 2 
+        . . . . . . . . . 2 2 2 2 2 2 2 
+        . 2 2 2 . . . . 2 2 2 2 2 2 . . 
+        2 . . . . 2 2 2 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . 2 2 2 2 . . . . . . . . 
+        . . . 2 . . . . 2 . . . . . . . 
+        2 2 2 2 . . . . . 2 2 2 . . . 2 
+        . . . . . . . . . . . . 2 2 2 2 
+        . . . . . . . . . . . . . . . 2 
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001010000000000000000010101000001020301000108000000010203050101040306040102010700010306040603040506030504030201010402030506050403060406030604`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . 2 2 . . . . 
+        . . . . 2 2 2 . . 2 . . 2 . 2 . 
+        . . . 2 . . . 2 2 . . . . 2 . 2 
+        . . 2 . . . . . . . . . . . . . 
+        2 2 . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.builtin.coral2,sprites.builtin.oceanDepths4,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000010101000000000000000101000000000000000000000101000100000100000000000001010000000000000000000006050001040401010100000000000001010101020203030404010101000001030404040302020203030304040101040202`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        2 2 2 . . . . . . . 2 2 . . . . 
+        . . . . . . 2 2 . 2 . . 2 . . . 
+        . . . 2 2 . . . . . . . . . . . 
+        . . 2 . . 2 2 2 . . . . . . 2 2 
+        2 2 . . . . . . 2 2 2 . . 2 . . 
+        . . . . . . . . . . . 2 2 . . . 
+        `, [myTiles.transparency16,sprites.builtin.brick,sprites.castle.rock1,sprites.castle.saplingOak,sprites.castle.shrub,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005000001010000000000000000000000010101020401000101000000010000060204030404030102040101010401010104030402020403040402030402040304`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . 2 2 . . . . . . . . . . . 
+        2 2 2 . . 2 . 2 2 . . . 2 . . . 
+        . . . . . . 2 . . 2 2 2 . 2 2 2 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.castle.rock1,sprites.castle.saplingOak,sprites.castle.shrub,sprites.castle.saplingPine,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`10001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a0000000000000000010100000000000100000000000000010606010100010107090001010101010607070606010808080101040404040404040404050505050503020202020202020202020404030303`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . 2 2 . . . . . 2 
+        . . . . . . . 2 . . 2 2 . 2 2 . 
+        . . 2 2 2 2 2 . . . . . 2 . . . 
+        2 2 . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.rock2,sprites.builtin.coral2,sprites.builtin.oceanDepths0,sprites.builtin.forestTiles0,sprites.castle.tilePath5,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000100000000000000000000000000000003010000010101010000010100000000030401010403040201010404010000060402030302020403030304020401010104030402030204030202020204030402`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        2 . . . . . . . . . . . . . . . 
+        . 2 . . 2 2 2 2 . . 2 2 . . . . 
+        . . 2 2 . . . . 2 2 . . 2 . . . 
+        . . . . . . . . . . . . . 2 2 2 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tileDarkGrass2,sprites.castle.tileGrass2,sprites.dungeon.darkGroundCenter,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005040000000000000000000000000000030101010101010101010101010101010102020202020202020202020202020202`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
+        . . . . . . . . . . . . . . . . 
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen))
+    ]
+    tiles.loadMap(levels[1])
+    tiles.connectMapById(list[0], list[1], ConnectionKind.T1)
+    tiles.connectMapById(list[1], list[2], ConnectionKind.T2)
+    tiles.connectMapById(list[2], list[3], ConnectionKind.T3)
+    tiles.connectMapById(list[3], list[4], ConnectionKind.T4)
+    tiles.connectMapById(list[4], list[5], ConnectionKind.T5)
+    tiles.connectMapById(list[5], list[6], ConnectionKind.T6)
+    tiles.connectMapById(list[6], list[7], ConnectionKind.T7)
+    tiles.connectMapById(list[7], list[8], ConnectionKind.T8)
+    tiles.connectMapById(list[8], list[9], ConnectionKind.T9)
+    tiles.connectMapById(list[9], list[10], ConnectionKind.T10)
+    tiles.connectMapById(list[10], list[11], ConnectionKind.T11)
+    tiles.connectMapById(list[11], list[12], ConnectionKind.T12)
+    tiles.connectMapById(list[12], list[13], ConnectionKind.T13)
+    tiles.connectMapById(list[13], list[14], ConnectionKind.T14)
+    tiles.connectMapById(list[14], list[15], ConnectionKind.T15)
+    tiles.connectMapById(list[15], list[16], ConnectionKind.T16)
+    tiles.connectMapById(list[16], list[17], ConnectionKind.T17)
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     statusbar.value += 1
     otherSprite.destroy()
@@ -709,82 +1172,56 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Potion, function (sprite, otherS
         woodcutter.say("=_=", 200)
     }
 })
-function Level_cheak (Level_Number: number) {
-    if (levels.length == Level_Number) {
-    	
+function Level_cheak () {
+    if (levels.indexOf(tiles.getLoadedMap()) == 1) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 2) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+        woodcutter.say(":)", 500)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 3) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 4) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 5) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 6) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 7) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 8) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 9) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 10) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 11) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 12) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 13) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 14) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 15) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 16) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 17) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
     }
-    demon = sprites.create(img`
-        .......ffffffff.......
-        .......f22bbbbf.......
-        .....fff22bbbbff......
-        .....f22222bbbbf......
-        .....fbb2222222fff....
-        ....ffb2222222222ff...
-        ...f222222222222222f..
-        ..f2222f1222f122222f..
-        ..f2222ff222ff22222f..
-        ..f2222222222222222f..
-        ..f2333222222233322f..
-        ..f2333222222233322f..
-        ..f2222222222222222f..
-        ...ff222222222222ff...
-        ....ffffffffffffff....
-        .....f1f5f15f1f5f.....
-        ..ffffffffffffffffff..
-        .fbbbbbf1f51f5fcccccf.
-        fbbfbbbffffffffccffccf
-        fbbfbffcf2222fbfcffccf
-        fbbfbffcf2222fbfcffccf
-        fbbfbfcccf22fbbfccfccf
-        .fbfbffcff22ffbfcffcf.
-        ..ffffff222222ffffff..
-        ...f.ff22222222f2ff2f.
-        .......f22222222222f..
-        .......f222222222ff...
-        ........ffff22222f....
-        ...........ff222f.....
-        .............ff2f.....
-        ..............ff......
-        ...............ff.....
-        `, SpriteKind.Enemy)
-    demon.destroy()
-    demon.z = 2
-    princess = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 3 . 3 . . . . . . 
-        . . . . . . f 3 9 3 f . . . . . 
-        . . . . . f 5 2 2 2 5 f . . . . 
-        . . . . f 5 5 5 5 1 5 5 f . . . 
-        . . . . f 5 5 5 5 5 1 5 f . . . 
-        . . . . f d f d 5 5 5 1 f . . . 
-        . . . . f d f d 5 5 5 5 f f . . 
-        . . . . f d d 3 d 5 5 5 f 5 f . 
-        . . . . . f d d d f f 5 5 f . . 
-        . . . . . . f f 9 9 f f 5 5 f . 
-        . . . . . f 3 3 3 f d f f 5 f . 
-        . . . . . f 3 3 3 f d d f f . . 
-        . . . . . . f 9 9 f f f . . . . 
-        . . . . . f 3 3 3 3 f . . . . . 
-        . . . . . f f f f f f . . . . . 
-        `, SpriteKind.hostage)
-    princess.destroy()
-    princess.z = 1
 }
-let princess: Sprite = null
 let life_up: Sprite = null
+let levels: tiles.WorldMap[] = []
 let energy: Sprite = null
 let snails: Sprite = null
-let direction2 = 0
-let direction = 0
-let range2 = 0
 let mySprite: Sprite[] = []
-let projectile2: Sprite = null
+let princess: Sprite = null
+let Magnifying_glass: Sprite = null
+let projectile: Sprite = null
 let statusbar: StatusBarSprite = null
 let demon: Sprite = null
-let Magnifying_glass: Sprite = null
 let statusbar2: StatusBarSprite = null
 let woodcutter: Sprite = null
-let levels: tiles.WorldMap[] = []
 let skill = 0
 info.setLife(5)
 let boss_HP = 20
@@ -1277,344 +1714,17 @@ scene.setBackgroundImage(img`
     77777777722277777777777777777777777777777722277777777777777777777777777777772777222777777777222777777777772777777772227777772777772227777777222777ddd77777777777
     777777777222777777777777777777777777777777777777777777777777777777777777777777777777777777772227777777777777777777777777777777777722277777772227777d777777777777
     `)
-levels = [
-tiles.createMap(tiles.createTilemap(hex`1000100004020202020202020204040402020204020701010102070101020202020c0204020102020101010101010201010102020201020c020d02010201010101010102020102010102010102010202020201020202010201010101020102010a020102020e010102010201020202010202010202020201010102010101010102010102020c020202020c02010209010102020202010101010101010102020201010102040202020201020101010b020201020204030404020102010209010102010102030404020101020102020201020201020202020201020101020402010202010202070101010108020204020d0802010602050202020202020403020202020202`, img`
-    . 2 2 2 2 2 2 2 2 . . . 2 2 2 . 
-    2 . . . . 2 . . . 2 2 2 2 . 2 . 
-    2 . 2 2 . . . . . . 2 . . . 2 2 
-    2 . 2 . 2 . 2 . 2 . . . . . . 2 
-    2 . 2 . . 2 . . 2 . 2 2 2 2 . 2 
-    2 2 . 2 . . . . 2 . 2 . . 2 . 2 
-    2 . . . 2 . 2 . 2 2 2 . 2 2 . 2 
-    2 2 2 . . . 2 . . . . . 2 . . 2 
-    2 . 2 2 2 2 . 2 . 2 . . . 2 2 2 
-    2 . . . . . . . . 2 2 2 . . . 2 
-    . 2 2 2 2 . 2 . . . . 2 2 . 2 2 
-    . . . . 2 . 2 . 2 . . . 2 . . 2 
-    . . . 2 . . 2 . 2 2 2 . 2 2 . 2 
-    2 2 2 2 . 2 . . 2 . 2 . 2 2 . 2 
-    2 . . . . . . 2 2 . 2 . . 2 . . 
-    2 . 2 2 2 2 2 2 . . 2 2 2 2 2 2 
-    `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,sprites.dungeon.doorLockedEast,sprites.castle.tilePath1,sprites.castle.tilePath9,sprites.castle.tilePath7,sprites.castle.tilePath6,sprites.castle.tilePath3,sprites.castle.tilePath2,sprites.castle.tilePath8,sprites.castle.tilePath4], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005060006050607000000000000000602020200020202020000000000000002000000000001010100000000000502000000000000000000000000000002000000060600000000000000000602000005060202060600000000000002000006020201010202000000040006060006020101010101010506000202020202020103010103030102020701010101010101010101020201010102030303030303030303030101030303030201010101010202020201010101010101030101030101010303010103010301`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . 2 2 2 . 2 2 2 2 
-    . . . . . . . 2 . . . . . 2 2 2 
-    . . . . . . 2 . . . . . . . . . 
-    . . . . . 2 . . . . . . . . . . 
-    . . . . 2 . . . . 2 2 . . . . . 
-    . . . 2 . . . 2 2 . . 2 2 . . . 
-    . . . . . . 2 . . . . . 2 . . . 
-    2 2 2 2 2 2 . . . . . . . 2 2 . 
-    . . . . . . . . . . . . . . . 2 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.castle.tilePath2,sprites.castle.tileGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleRedCrystal,tiles.util.arrow5,myTiles.tile3], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000a000000000000000000000900000009090000000a090909000000000909090900090909090900000000000000000000000000000000000009000d0000000000000000000000000000090900000000000000000000000000000000000000000000000000000000000000000000000000020a0202000000000b00000c0000000201010803020002020200000202020201030104010b02010401000d010408010b0701010b0106010107020203010103010108030105010305010805010b05010104010107010106010b0104`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    2 . . . 2 2 . . . . 2 2 2 . . . 
-    . 2 2 2 2 . 2 2 2 2 2 . . . . . 
-    . . . . . . . . . . . . . 2 . . 
-    . . . . . . . . . . . . . . 2 2 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . 2 . 2 2 . . . . . . . 
-    . . . . 2 . 2 . . 2 . 2 2 2 . . 
-    2 2 2 2 . . . . . . 2 . . 2 . . 
-    . . . . . . . . . . . . . . 2 2 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileGrass1,sprites.castle.tileDarkGrass1,sprites.castle.tileDarkGrass3,sprites.castle.tileGrass2,sprites.builtin.brick,sprites.castle.saplingPine,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`100010000000060000000000000600000000000000000000000006000000000600000000000006000006000000000000000000000000000000000000000000000000000e00000000000000000000000003070707000000000000000003070707070404040d07070700000000070404040404000007000000000707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000601010100000000010100000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
-    . . 2 . . . . . . 2 . . . . . . 
-    . . . . . . 2 . . . . 2 . . . . 
-    . . 2 . . 2 . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . 2 2 2 
-    . . . . . . . . . 2 2 2 2 2 2 2 
-    . 2 2 2 . . . . 2 2 2 2 2 2 . . 
-    2 . . . . 2 2 2 . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . 2 2 2 2 . . . . 2 2 . . 
-    . . . 2 . . . . 2 . . . . . . . 
-    2 2 2 2 . . . . . 2 2 2 . . . . 
-    . . . . . . . . . . . . 2 2 2 . 
-    . . . . . . . . . . . . . . . 2 
-    `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`100010000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a00000000000000000000000000000a000000000000000000000000000000000c0000000000000000000000000000000700000007000708000000070000000d000707070908090807000700070007070008080900000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d00000000000000000000000000000101000000000001010000000000010103030c000002010303010000020103030b0b0101010103030b0301010103030b03030603030305060503030303050605030604030403040404030403030404040304`, img`
-    2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
-    2 . . . . . . . . . . . . . . 2 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    2 . . . 2 . 2 2 . . . 2 . . . . 
-    . 2 2 2 2 2 2 2 2 . 2 . 2 . 2 2 
-    . 2 2 2 . . . 2 . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . 2 2 
-    . . . . . 2 2 . . . . . 2 2 . . 
-    . . . . 2 . . 2 . . . 2 . . . . 
-    2 2 2 2 . . . . 2 2 2 . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.builtin.oceanDepths8,sprites.builtin.coral2,sprites.builtin.oceanDepths4,sprites.castle.tilePath5,sprites.castle.tileDarkGrass3,sprites.builtin.forestTiles0,sprites.castle.tilePath2,sprites.castle.rock1,sprites.castle.rock0,sprites.castle.rock2,sprites.castle.shrub,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`10001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c00000000040000000000000000000004040404040504000000000000000d00000000050500000004000b050404000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c00010101000000000101020000000001010307030101000103020301000000070a080303030002090301030a01010d0303060a0308010103030608030703010903030308030a0309030a030a03030703060309030303060308030306030903080303030708030a0307030a03030807`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . 2 . . . . . . . . . 
-    . 2 2 2 2 2 2 2 . . . . . . . . 
-    . . . . 2 2 . . . 2 . 2 2 2 2 . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . 2 2 2 . . . . 2 2 2 . . . . 
-    2 2 . . . 2 2 . 2 . . . 2 . . . 
-    . . . . . . . 2 . . . . . 2 2 . 
-    . . . . . . . . . . . . . . . 2 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tilePath5,sprites.builtin.coral2,sprites.castle.rock0,sprites.castle.saplingOak,sprites.castle.saplingPine,sprites.castle.shrub,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`100010000000060000000000000600000000000000000000000006000000000600000000000006000006000000000000000000000000000000000000000000000000000e000000000000000000000000030707070d0000000000000003070707070404040707070700000000070404040404000000000000000707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000601010100000000010100000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
-    . . 2 . . . . . . 2 . . . . . . 
-    . . . . . . 2 . . . . 2 . . . . 
-    . . 2 . . 2 . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . 2 2 2 
-    . . . . . . . . . 2 2 2 2 2 2 2 
-    2 2 2 2 . . . . 2 2 2 2 2 2 . . 
-    . . . . . 2 2 2 . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . 2 . . . . . . . . . . . 
-    . . . . 2 2 2 2 . . . . 2 2 . . 
-    . . . 2 . . . . 2 . . . . . . . 
-    2 2 2 . . . . . . 2 2 2 . . . . 
-    . . . . . . . . . . . . 2 2 2 . 
-    . . . . . . . . . . . . . . . 2 
-    `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c0b0000000a0009090a00000000000a090900000a0a0000000a0009090909000a00000a0a0000000000000909000a000a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001010101000000000000000000000001020802020101000000000b0000010108080508080408020000000101010808040304030806080101000c0106050406080408080408050802010106020705080303030303080406080506`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . 2 . 2 2 2 . . . . . 2 2 
-    2 . . 2 2 . . . 2 . 2 2 2 2 . 2 
-    . . 2 2 . . . . . . 2 2 . 2 . 2 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . 2 2 2 2 . . . . . . 
-    . . . . . 2 . . . . 2 2 . . . . 
-    . . . 2 2 . . . . . . . 2 . . . 
-    2 2 2 . . . . . . . . . 2 2 . . 
-    . . . . . . . . . . . . . . 2 2 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.castle.tileGrass1,sprites.castle.tileGrass3,sprites.builtin.coral2,sprites.castle.rock1,sprites.castle.rock2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000060600000000000000000000000000000000060000000000000600000000000800000006000600060600060006000606000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000606000000000000060600000000060203050405000000000603030204050105010105010501000803010203050202010102010201050304`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    2 2 . . . . . . . . . . . . . . 
-    . . 2 . . . . . . 2 . . . . . . 
-    . . . 2 . 2 . 2 2 . 2 . 2 . 2 2 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . 2 2 . . . . . . 
-    2 2 . . . . 2 2 . . 2 2 . . . . 
-    . . 2 2 2 2 . . . . . . 2 2 . . 
-    . . . . . . . . . . . . . . 2 2 
-    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.castle.tileGrass1,sprites.builtin.coral2,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000010100000000010000000000000000000000010001010001000000000000000000000000000000000100010000000000000000000000000000000001000000000000000000000000000000000100000000000000000000000000000000010006000000000000000000000000000001010000000000000000000000000000000005000001000000000000000000000000010101010100000000000101000000060403020304010100010103040101010101020103020103010203040302010301`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    2 2 . . . . 2 . . . . . . . . . 
-    . . 2 . 2 2 . 2 . . . . . . . . 
-    . . . . . . . . 2 . 2 . . . . . 
-    . . . . . . . . . . . 2 . . . . 
-    . . . . . . . . . . . . 2 . . . 
-    . . . . . . . . . . . . . 2 . . 
-    . . . . . . . . . . . . . . 2 2 
-    . . . . . . . . . . . . . . . . 
-    . . . 2 . . . . . . . . . . . . 
-    2 2 2 . 2 . . . . . 2 2 2 . . . 
-    . . . . . 2 2 2 2 2 . . 2 2 2 2 
-    . . . . . . . 2 . . . . . . . . 
-    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.rock1,sprites.castle.rock2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000100000000000000000000000000000100000000000000000000000101000100000000000101000101010000000100000007000105050106020601010000000008010105020404050205050401000001010504030202040303040305060101060102030605030602060503040205030205`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . 2 
-    . . . . . . . . . . . . . . 2 . 
-    . . . . . . . . . . 2 2 . 2 . . 
-    . . . 2 2 . 2 2 2 . . . 2 . . . 
-    . . 2 . . 2 . . . 2 2 . . . . . 
-    2 2 . . . . . . . . . 2 . . 2 2 
-    . . . . . . . . . . . . 2 2 . 2 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.dungeon.darkGroundNorth,sprites.builtin.forestTiles0,sprites.castle.rock2,sprites.castle.rock1,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000003030707000000000000000003030703070404040d03030300000003070404040404000007000000000703070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000601010100000000000000000d0000010b0c050a010000000000000e01010102060206020501010100000008050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . 2 2 2 
-    . . . . . . . . . 2 2 2 2 2 2 2 
-    . 2 2 2 . . . . 2 2 2 2 2 2 . . 
-    2 . . . . 2 2 2 . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . 2 2 2 2 . . . . . . . . 
-    . . . 2 . . . . 2 . . . . . . . 
-    2 2 2 2 . . . . . 2 2 2 . . . 2 
-    . . . . . . . . . . . . 2 2 2 2 
-    . . . . . . . . . . . . . . . 2 
-    `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001010000000000000000010101000001020301000108000000010203050101040306040102010700010306040603040506030504030201010402030506050403060406030604`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . 2 2 . . . . 
-    . . . . 2 2 2 . . 2 . . 2 . 2 . 
-    . . . 2 . . . 2 2 . . . . 2 . 2 
-    . . 2 . . . . . . . . . . . . . 
-    2 2 . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.builtin.coral2,sprites.builtin.oceanDepths4,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000010101000000000000000101000000000000000000000101000100000100000000000001010000000000000000000006050001040401010100000000000001010101020203030404010101000001030404040302020203030304040101040202`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    2 2 2 . . . . . . . 2 2 . . . . 
-    . . . . . . 2 2 . 2 . . 2 . . . 
-    . . . 2 2 . . . . . . . . . . . 
-    . . 2 . . 2 2 2 . . . . . . 2 2 
-    2 2 . . . . . . 2 2 2 . . 2 . . 
-    . . . . . . . . . . . 2 2 . . . 
-    `, [myTiles.transparency16,sprites.builtin.brick,sprites.castle.rock1,sprites.castle.saplingOak,sprites.castle.shrub,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005000001010000000000000000000000010101020401000101000000010000060204030404030102040101010401010104030402020403040402030402040304`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . 2 2 . . . . . . . . . . . 
-    2 2 2 . . 2 . 2 2 . . . 2 . . . 
-    . . . . . . 2 . . 2 2 2 . 2 2 2 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.castle.rock1,sprites.castle.saplingOak,sprites.castle.shrub,sprites.castle.saplingPine,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`10001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a0000000000000000010100000000000100000000000000010606010100010107090001010101010607070606010808080101040404040404040404050505050503020202020202020202020404030303`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . 2 2 . . . . . 2 
-    . . . . . . . 2 . . 2 2 . 2 2 . 
-    . . 2 2 2 2 2 . . . . . 2 . . . 
-    2 2 . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.rock2,sprites.builtin.coral2,sprites.builtin.oceanDepths0,sprites.builtin.forestTiles0,sprites.castle.tilePath5,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000100000000000000000000000000000003010000010101010000010100000000030401010403040201010404010000060402030302020403030304020401010104030402030204030202020204030402`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    2 . . . . . . . . . . . . . . . 
-    . 2 . . 2 2 2 2 . . 2 2 . . . . 
-    . . 2 2 . . . . 2 2 . . 2 . . . 
-    . . . . . . . . . . . . . 2 2 2 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tileDarkGrass2,sprites.castle.tileGrass2,sprites.dungeon.darkGroundCenter,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen)),
-tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005040000000000000000000000000000030101010101010101010101010101010102020202020202020202020202020202`, img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-    . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleBlueCrystal], TileScale.Sixteen))
-]
-tiles.loadMap(levels[1])
-Roles_Set_Main()
-Roles_Set_2()
+Level_set()
+Roles_Set()
 Mob_Set()
-woodcutter.setFlag(SpriteFlag.ShowPhysics, true)
 game.onUpdate(function () {
     Player_attack()
+    Level_cheak()
     if (boss_HP == 0) {
         demon.destroy()
         demon.say("NO~~~~")
     }
-    if (snails_kill == 5) {
+    if (snails_kill == 5 && Math.percentChance(5)) {
         life_up = sprites.create(img`
             . . . . . . . . . 
             . f f f f f f f . 
