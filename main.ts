@@ -26,13 +26,10 @@ namespace ConnectionKind {
 }
 scene.onOverlapTile(SpriteKind.Player, myTiles.tile3, function (sprite, location) {
     if (levels.indexOf(tiles.getLoadedMap()) == 1) {
-        woodcutter.say("1", 500)
         tiles.loadConnectedMap(ConnectionKind.T1)
     } else if (levels.indexOf(tiles.getLoadedMap()) == 2) {
-        woodcutter.say("2", 500)
         tiles.loadConnectedMap(ConnectionKind.T2)
     } else if (levels.indexOf(tiles.getLoadedMap()) == 3) {
-        woodcutter.say("3", 500)
         tiles.loadConnectedMap(ConnectionKind.T3)
     } else if (levels.indexOf(tiles.getLoadedMap()) == 4) {
         tiles.loadConnectedMap(ConnectionKind.T4)
@@ -60,11 +57,13 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile3, function (sprite, location
         tiles.loadConnectedMap(ConnectionKind.T15)
     } else if (levels.indexOf(tiles.getLoadedMap()) == 16) {
         tiles.loadConnectedMap(ConnectionKind.T16)
+        Boss()
     } else if (levels.indexOf(tiles.getLoadedMap()) == 17) {
         tiles.loadConnectedMap(ConnectionKind.T17)
     }
-    tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0])
+    tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[1])
     tiles.setTileAt(tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0], myTiles.transparency16)
+    tiles.setTileAt(tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[1], myTiles.transparency16)
     tiles.destroySpritesOfKind(SpriteKind.Food)
     tiles.destroySpritesOfKind(SpriteKind.subordinate)
     Mob_Set()
@@ -76,7 +75,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.subordinate, function (sprite, o
     } else {
         woodcutter.startEffect(effects.trail, 500)
         statusbar2.value += -1
-        info.changeLifeBy(0)
+        info.changeLifeBy(-1)
         pause(500)
     }
 })
@@ -84,6 +83,68 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     JUMP(woodcutter, true, 45)
     JUMP(woodcutter, false, 45)
 })
+function Boss () {
+    for (let value of tiles.getTilesByType(tiles.util.object4)) {
+        demon = sprites.create(img`
+            .......ffffffff.......
+            .......f22bbbbf.......
+            .....fff22bbbbff......
+            .....f22222bbbbf......
+            .....fbb2222222fff....
+            ....ffb2222222222ff...
+            ...f222222222222222f..
+            ..f2222f1222f122222f..
+            ..f2222ff222ff22222f..
+            ..f2222222222222222f..
+            ..f2333222222233322f..
+            ..f2333222222233322f..
+            ..f2222222222222222f..
+            ...ff222222222222ff...
+            ....ffffffffffffff....
+            .....f1f5f15f1f5f.....
+            ..ffffffffffffffffff..
+            .fbbbbbf1f51f5fcccccf.
+            fbbfbbbffffffffccffccf
+            fbbfbffcf2222fbfcffccf
+            fbbfbffcf2222fbfcffccf
+            fbbfbfcccf22fbbfccfccf
+            .fbfbffcff22ffbfcffcf.
+            ..ffffff222222ffffff..
+            ...f.ff22222222f2ff2f.
+            .......f22222222222f..
+            .......f222222222ff...
+            ........ffff22222f....
+            ...........ff222f.....
+            .............ff2f.....
+            ..............ff......
+            ...............ff.....
+            `, SpriteKind.Enemy)
+        demon.z = 2
+        tiles.setTileAt(value, myTiles.transparency16)
+    }
+    for (let value of tiles.getTilesByType(tiles.util.object5)) {
+        princess = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . 3 . 3 . . . . . . 
+            . . . . . . f 3 9 3 f . . . . . 
+            . . . . . f 5 2 2 2 5 f . . . . 
+            . . . . f 5 5 5 5 1 5 5 f . . . 
+            . . . . f 5 5 5 5 5 1 5 f . . . 
+            . . . . f d f d 5 5 5 1 f . . . 
+            . . . . f d f d 5 5 5 5 f f . . 
+            . . . . f d d 3 d 5 5 5 f 5 f . 
+            . . . . . f d d d f f 5 5 f . . 
+            . . . . . . f f 9 9 f f 5 5 f . 
+            . . . . . f 3 3 3 f d f f 5 f . 
+            . . . . . f 3 3 3 f d d f f . . 
+            . . . . . . f 9 9 f f f . . . . 
+            . . . . . f 3 3 3 3 f . . . . . 
+            . . . . . f f f f f f . . . . . 
+            `, SpriteKind.hostage)
+        princess.z = 1
+        tiles.setTileAt(value, myTiles.transparency16)
+    }
+}
 function Player_attack () {
     let lv = 0
     if (lv == 12 && woodcutter.overlapsWith(demon)) {
@@ -174,6 +235,41 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . f f f . . . f f . . . . 
         `)
 })
+scene.onOverlapTile(SpriteKind.Player, myTiles.tile12, function (sprite, location) {
+    if (levels.indexOf(tiles.getLoadedMap()) == 1) {
+        tiles.loadConnectedMap(ConnectionKind.T1)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 2) {
+        tiles.loadConnectedMap(ConnectionKind.T2)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 3) {
+        tiles.loadConnectedMap(ConnectionKind.T3)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 4) {
+        tiles.loadConnectedMap(ConnectionKind.T4)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 5) {
+        tiles.loadConnectedMap(ConnectionKind.T5)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 6) {
+        tiles.loadConnectedMap(ConnectionKind.T6)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 7) {
+        tiles.loadConnectedMap(ConnectionKind.T7)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 8) {
+        tiles.loadConnectedMap(ConnectionKind.T8)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 9) {
+        tiles.loadConnectedMap(ConnectionKind.T9)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 10) {
+        tiles.loadConnectedMap(ConnectionKind.T10)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 11) {
+        tiles.loadConnectedMap(ConnectionKind.T11)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 12) {
+        tiles.loadConnectedMap(ConnectionKind.T12)
+    } else if (levels.indexOf(tiles.getLoadedMap()) == 13) {
+        tiles.loadConnectedMap(ConnectionKind.T13)
+    }
+    tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0])
+    tiles.setTileAt(tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0], myTiles.transparency16)
+    tiles.setTileAt(tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[1], myTiles.transparency16)
+    tiles.destroySpritesOfKind(SpriteKind.Food)
+    tiles.destroySpritesOfKind(SpriteKind.subordinate)
+    Mob_Set()
+})
 function 圖像擋專區 () {
     Magnifying_glass = sprites.create(img`
         f f f f f f f f f . 
@@ -189,62 +285,6 @@ function 圖像擋專區 () {
         `, SpriteKind.Magnifying)
     Magnifying_glass.z = 0
     Magnifying_glass.destroy()
-    demon = sprites.create(img`
-        .......ffffffff.......
-        .......f22bbbbf.......
-        .....fff22bbbbff......
-        .....f22222bbbbf......
-        .....fbb2222222fff....
-        ....ffb2222222222ff...
-        ...f222222222222222f..
-        ..f2222f1222f122222f..
-        ..f2222ff222ff22222f..
-        ..f2222222222222222f..
-        ..f2333222222233322f..
-        ..f2333222222233322f..
-        ..f2222222222222222f..
-        ...ff222222222222ff...
-        ....ffffffffffffff....
-        .....f1f5f15f1f5f.....
-        ..ffffffffffffffffff..
-        .fbbbbbf1f51f5fcccccf.
-        fbbfbbbffffffffccffccf
-        fbbfbffcf2222fbfcffccf
-        fbbfbffcf2222fbfcffccf
-        fbbfbfcccf22fbbfccfccf
-        .fbfbffcff22ffbfcffcf.
-        ..ffffff222222ffffff..
-        ...f.ff22222222f2ff2f.
-        .......f22222222222f..
-        .......f222222222ff...
-        ........ffff22222f....
-        ...........ff222f.....
-        .............ff2f.....
-        ..............ff......
-        ...............ff.....
-        `, SpriteKind.Enemy)
-    demon.destroy()
-    demon.z = 2
-    princess = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 3 . 3 . . . . . . 
-        . . . . . . f 3 9 3 f . . . . . 
-        . . . . . f 5 2 2 2 5 f . . . . 
-        . . . . f 5 5 5 5 1 5 5 f . . . 
-        . . . . f 5 5 5 5 5 1 5 f . . . 
-        . . . . f d f d 5 5 5 1 f . . . 
-        . . . . f d f d 5 5 5 5 f f . . 
-        . . . . f d d 3 d 5 5 5 f 5 f . 
-        . . . . . f d d d f f 5 5 f . . 
-        . . . . . . f f 9 9 f f 5 5 f . 
-        . . . . . f 3 3 3 f d f f 5 f . 
-        . . . . . f 3 3 3 f d d f f . . 
-        . . . . . . f 9 9 f f f . . . . 
-        . . . . . f 3 3 3 3 f . . . . . 
-        . . . . . f f f f f f . . . . . 
-        `, SpriteKind.hostage)
-    princess.destroy()
-    princess.z = 1
     list = [
     sprites.create(img`
         ..................................................
@@ -725,7 +765,6 @@ function Roles_Set () {
         . . . f 4 4 4 4 4 4 f . . . . . 
         . . . . f f f f f f . . . . . . 
         `, SpriteKind.Player)
-    woodcutter.setFlag(SpriteFlag.ShowPhysics, true)
     woodcutter.z = 1
     controller.moveSprite(woodcutter)
     scene.cameraFollowSprite(woodcutter)
@@ -765,7 +804,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 function Mob_Set () {
-    for (let value2 of tiles.getTilesByType(sprites.dungeon.collectibleRedCrystal)) {
+    for (let value of tiles.getTilesByType(sprites.dungeon.collectibleRedCrystal)) {
         snails = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . a a . . . 
@@ -785,7 +824,7 @@ function Mob_Set () {
             . . . . a a a a a a a a a a . . 
             `, SpriteKind.subordinate)
         snails.z = 0
-        tiles.placeOnTile(snails, value2)
+        tiles.placeOnTile(snails, value)
         snails.vx = randint(-25, 25)
         if (snails.vx < 0) {
             snails.setImage(img`
@@ -826,8 +865,7 @@ function Mob_Set () {
                 . . a a a a a a a a a a . . . . 
                 `)
         }
-        snails.setFlag(SpriteFlag.ShowPhysics, true)
-        tiles.setTileAt(value2, tiles.util.arrow5)
+        tiles.setTileAt(value, tiles.util.arrow5)
     }
     for (let value of tiles.getTilesByType(tiles.util.arrow5)) {
         energy = sprites.create(img`
@@ -852,7 +890,6 @@ function Mob_Set () {
         tiles.placeOnTile(energy, value)
         tiles.setTileAt(value, myTiles.transparency16)
     }
-    return
 }
 function Level_set () {
     levels = [
@@ -874,7 +911,7 @@ function Level_set () {
         2 . . . . . . 2 2 . 2 . . 2 . . 
         2 . 2 2 2 2 2 2 . . 2 2 2 2 2 2 
         `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,sprites.dungeon.doorLockedEast,sprites.castle.tilePath1,sprites.castle.tilePath9,sprites.castle.tilePath7,sprites.castle.tilePath6,sprites.castle.tilePath3,sprites.castle.tilePath2,sprites.castle.tilePath8,sprites.castle.tilePath4], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005060006050607000000000000000602020200020202020000000000000002000000000001010100000000000502000000000000000000000000000002000000060600000000000000000602000005060202060600000008000002000006020201010202000000040006060006020101010101010506000202020202020103010103030102020701010101010101010101020201010102030303030303030303030101030303030201010101010202020201010101010101030101030101010303010103010301`, img`
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005060006050609000000000000000602020200020202020000000000000002000000000001010100000000000502000000000000000000000000000002000000060600000000000000000602000005060202060600000008000002000006020201010202000000040006060006020101010101010506000202020202020103010103030102020701010101010101010101020201010102030303030303030303030101030303030201010101010202020201010101010101030101030101010303010103010301`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -891,8 +928,8 @@ function Level_set () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.castle.tilePath2,sprites.castle.tileGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleRedCrystal,tiles.util.arrow5,myTiles.tile3,myTiles.tile1], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000c0000000f0a000000000f000f000000090f0e0f09090f0e0f0a0909090000000009090909000909090909000000000000000000000000000000000000090e0d000000000000000000000000000009090000000000000000000000000000000000000000000e0f0f0f00000000000000100000000f020a02020f000e0f0b00000c00000f0201010803020f0202020f000202020201030104010b020104010f0d010408010b0701010b0106010107020203010103010108030105010305010805010b05010104010107010106010b0104`, img`
+        `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.castle.tilePath2,sprites.castle.tileGrass2,sprites.dungeon.collectibleInsignia,sprites.dungeon.collectibleRedCrystal,tiles.util.arrow5,myTiles.tile3,myTiles.tile1,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000c0000000f0a000000000f000f000000090f0e0f09090f0e0f0a0909090000000009090909000909090909000000000000000000000000000000000000090e11000000000000000000000000000009090000000000000000000000000000000000000000000e0f0f0f00000000000000100000000f020a02020f000e0f0b00000c00000f0201010803020f0202020f000202020201030104010b020104010f0d010408010b0701010b0106010107020203010103010108030105010305010805010b05010104010107010106010b0104`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -909,8 +946,8 @@ function Level_set () {
         . . . . . . . . . . . . . . 2 2 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileGrass1,sprites.castle.tileDarkGrass1,sprites.castle.tileDarkGrass3,sprites.castle.tileGrass2,sprites.builtin.brick,sprites.castle.saplingPine,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,myTiles.tile3,sprites.dungeon.collectibleRedCrystal,tiles.util.arrow5,myTiles.tile2], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`100010000000060000000000000600000000000000000000000006000000000600000000000006000006000000000000000000000000000000000000000000000000000e000000000000000000000000030707070f0000000000000003070707070404040d070707000000000704040404040000070000000007070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f0000000601010100000000010100000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
+        `, [myTiles.transparency16,sprites.castle.tilePath5,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileGrass1,sprites.castle.tileDarkGrass1,sprites.castle.tileDarkGrass3,sprites.castle.tileGrass2,sprites.builtin.brick,sprites.castle.saplingPine,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,myTiles.tile3,sprites.dungeon.collectibleRedCrystal,tiles.util.arrow5,myTiles.tile2,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000600000000000006000000000000000000000000060000000006000000000000060000060000000000000000000000000000000000000000000000000010000000000000000000000000030707070f0000000000000003070707070404040d070707000000000704040404040000070000000007070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f0000000601010100000000010100000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
         . . 2 . . . . . . 2 . . . . . . 
         . . . . . . 2 . . . . 2 . . . . 
         . . 2 . . 2 . . . . . . . . . . 
@@ -927,8 +964,8 @@ function Level_set () {
         2 2 2 2 . . . . . 2 2 2 . . . . 
         . . . . . . . . . . . . 2 2 2 . 
         . . . . . . . . . . . . . . . 2 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile4], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`100010000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a00000000000000000000000000000a0e0000000000000000000000000000000c0000000000000000000000000000000700000007000708000000070000000d000707070908090807000700070007070008080900000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d000000000000000000000000000001010e0000000001010000000000010103030c000002010303010000020103030b0b0101010103030b0301010103030b03030603030305060503030303050605030604030403040404030403030404040304`, img`
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile4,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`100010000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a00000000000000000000000000000a0e0000000000000000000000000000000c0000000000000000000000000000000700000007000708000000070000000f000707070908090807000700070007070008080900000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d000000000000000000000000000001010e0000000001010000000000010103030c000002010303010000020103030b0b0101010103030b0301010103030b03030603030305060503030303050605030604030403040404030403030404040304`, img`
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         2 . . . . . . . . . . . . . . 2 
         . . . . . . . . . . . . . . . . 
@@ -945,8 +982,8 @@ function Level_set () {
         2 2 2 2 . . . . 2 2 2 . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, [myTiles.transparency16,sprites.builtin.oceanDepths8,sprites.builtin.coral2,sprites.builtin.oceanDepths4,sprites.castle.tilePath5,sprites.castle.tileDarkGrass3,sprites.builtin.forestTiles0,sprites.castle.tilePath2,sprites.castle.rock1,sprites.castle.rock0,sprites.castle.rock2,sprites.castle.shrub,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile5], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e0c00000000040000000000000000000004040404040504000000000000000d00000000050500000004000b0504040000000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000c00010101000000000101020000000001010307030101000103020301000000070a080303030002090301030a01010d0303060a0308010103030608030703010903030308030a0309030a030a03030703060309030303060308030306030903080303030708030a0307030a03030807`, img`
+        `, [myTiles.transparency16,sprites.builtin.oceanDepths8,sprites.builtin.coral2,sprites.builtin.oceanDepths4,sprites.castle.tilePath5,sprites.castle.tileDarkGrass3,sprites.builtin.forestTiles0,sprites.castle.tilePath2,sprites.castle.rock1,sprites.castle.rock0,sprites.castle.rock2,sprites.castle.shrub,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile5,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e0c00000000040000000000000000000004040404040504000000000000000f00000000050500000004000b0504040000000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000c00010101000000000101020000000001010307030101000103020301000000070a080303030002090301030a01010d0303060a0308010103030608030703010903030308030a0309030a030a03030703060309030303060308030306030903080303030708030a0307030a03030807`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -963,8 +1000,8 @@ function Level_set () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tilePath5,sprites.builtin.coral2,sprites.castle.rock0,sprites.castle.saplingOak,sprites.castle.saplingPine,sprites.castle.shrub,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile6], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`100010000000060000000000000600000000000000000000000006000000000600000000000006000006000000000000000000000000000000000000000000000000000e0f0000000000000000000000030707070d00000000000000030707070704040407070707000000000704040404040000000000000007070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000f0000000601010100000000010100000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tilePath5,sprites.builtin.coral2,sprites.castle.rock0,sprites.castle.saplingOak,sprites.castle.saplingPine,sprites.castle.shrub,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile6,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`10001000000006000000000000060000000000000000000000000600000000060000000000000600000600000000000000000000000000000000000000000000000000100f0000000000000000000000030707070d00000000000000030707070704040407070707000000000704040404040000000000000007070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000f0000000601010100000000010100000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
         . . 2 . . . . . . 2 . . . . . . 
         . . . . . . 2 . . . . 2 . . . . 
         . . 2 . . 2 . . . . . . . . . . 
@@ -981,8 +1018,8 @@ function Level_set () {
         2 2 2 . . . . . . 2 2 2 . . . . 
         . . . . . . . . . . . . 2 2 2 . 
         . . . . . . . . . . . . . . . 2 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile7], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c0b0000000a0009090a00000000000a090900000a0a0000000a0009090909000a0d000a0a0000000000000909000a000a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010101010000000000000d0000000001020802020101000000000b0000010108080508080408020000000101010808040304030806080101000c0106050406080408080408050802010106020705080303030303080406080506`, img`
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile7,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e0b0000000a0009090a00000000000a090900000a0a0000000a0009090909000a0d000a0a0000000000000909000a000a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010101010000000000000d0000000001020802020101000000000b0000010108080508080408020000000101010808040304030806080101000c0106050406080408080408050802010106020705080303030303080406080506`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -999,8 +1036,8 @@ function Level_set () {
         2 2 2 . . . . . . . . . 2 2 . . 
         . . . . . . . . . . . . . . 2 2 
         . . . . . . . . . . . . . . . . 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.castle.tileGrass1,sprites.castle.tileGrass3,sprites.builtin.coral2,sprites.castle.rock1,sprites.castle.rock2,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile8], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000007000000000000000000000000000000060600000000000000000000000000000000060000000000000600000000000800000006000600060600060006000606000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000007000000000000000606000000000000060600000000060203050405000000000603030204050105010105010501000803010203050202010102010201050304`, img`
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.castle.tileGrass1,sprites.castle.tileGrass3,sprites.builtin.coral2,sprites.castle.rock1,sprites.castle.rock2,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile8,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000007000000000000000000000000000000060600000000000000000000000000000000060000000000000600000000000a00000006000600060600060006000606000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000007000000000000000606000000000000060600000000060203050405000000000603030204050105010105010501000803010203050202010102010201050304`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -1017,8 +1054,8 @@ function Level_set () {
         2 2 . . . . 2 2 . . 2 2 . . . . 
         . . 2 2 2 2 . . . . . . 2 2 . . 
         . . . . . . . . . . . . . . 2 2 
-        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.castle.tileGrass1,sprites.builtin.coral2,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile9], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000005000000000000000000000000000000010100000000010000000000000000000000010001010001000000000000000000000000000000000100010000000000000000000000000000000001000000000000000000000000000000000100000000000000000000000000000000010006000000000000000000000000000001010700000000000000000000000000000005000001000000000000000000000000010101010100000000000101000000060403020304010100010103040101010101020103020103010203040302010301`, img`
+        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.castle.tileGrass1,sprites.builtin.coral2,sprites.castle.rock1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile9,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000005000000000000000000000000000000010100000000010000000000000000000000010001010001000000000000000000000000000000000100010000000000000000000000000000000001000000000000000000000000000000000100000000000000000000000000000000010008000000000000000000000000000001010700000000000000000000000000000005000001000000000000000000000000010101010100000000000101000000060403020304010100010103040101010101020103020103010203040302010301`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -1035,8 +1072,8 @@ function Level_set () {
         2 2 2 . 2 . . . . . 2 2 . . . . 
         . . . . . 2 2 . 2 2 . . 2 2 2 2 
         . . . . . . . 2 . . . . . . . . 
-        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.rock1,sprites.castle.rock2,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile10], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000010000000000000000000000000000010000000000000000000000010100010000090a000101000101010000000100000007000105050106020601010000000008010105020404050205050401000001010504030202040303040305060101060102030605030602060503040205030205`, img`
+        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass2,sprites.castle.rock1,sprites.castle.rock2,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile10,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`10001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000b000000000000000000000000000000010000000000000000000000000000010000000000000000000000010100010000090a000101000101010000000100000007000105050106020601010000000008010105020404050205050401000001010504030202040303040305060101060102030605030602060503040205030205`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -1053,8 +1090,8 @@ function Level_set () {
         2 2 . . . . . . . . . 2 . . 2 2 
         . . . . . . . . . . . . 2 2 . 2 
         . . . . . . . . . . . . . . . . 
-        `, [myTiles.transparency16,sprites.dungeon.darkGroundNorth,sprites.builtin.forestTiles0,sprites.castle.rock2,sprites.castle.rock1,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile1,myTiles.tile11], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000030307070f0f00000000000003030703070404040d030303000000030704040404040000070000000007030700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f0f00000601010100000000000000000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
+        `, [myTiles.transparency16,sprites.dungeon.darkGroundNorth,sprites.builtin.forestTiles0,sprites.castle.rock2,sprites.castle.rock1,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile1,myTiles.tile11,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000030307070f0f00000000000003030703070404040d030303000000030704040404040000070000000007030700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f0f00000601010100000000000000000d0000010b0c050a01000000000000000101010206020602050101010000000e050b06090205090b0b080302010101080208020208020206020a0b050b060a02`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -1071,8 +1108,8 @@ function Level_set () {
         2 2 2 2 . . . . . 2 2 2 . . . . 
         . . . . . . . . . . . . 2 2 2 . 
         . . . . . . . . . . . . . . . 2 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile1], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001010000000000000000010101000001020301000108090a00010203050101040306040102010700010306040603040506030504030201010402030506050403060406030604`, img`
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.darkGroundCenter,sprites.castle.shrub,sprites.castle.rock2,sprites.dungeon.darkGroundNorth,sprites.builtin.coral3,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile1,myTiles.tile12], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`10001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000b0000000000000000000001010000000000000000010101000001020301000108090a00010203050101040306040102010700010306040603040506030504030201010402030506050403060406030604`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -1089,7 +1126,7 @@ function Level_set () {
         . . . 2 . . . 2 2 . . . . 2 . 2 
         . . 2 . . . . . . . . . . . . . 
         2 2 . . . . . . . . . . . . . . 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.builtin.coral2,sprites.builtin.oceanDepths4,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile1,myTiles.tile2], TileScale.Sixteen)),
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.builtin.coral2,sprites.builtin.oceanDepths4,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile1,myTiles.tile2,myTiles.tile12], TileScale.Sixteen)),
     tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005070800000000000000000000000000010101000000000000000101000000000000000000000101000100000100000007080001010000000000000000000006050001040401010100000000000001010101020203030404010101000001030404040302020203030304040101040202`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -1162,7 +1199,7 @@ function Level_set () {
         . . . . . . . . . . . . . 2 2 2 
         . . . . . . . . . . . . . . . . 
         `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tileDarkGrass2,sprites.castle.tileGrass2,sprites.dungeon.darkGroundCenter,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile1,myTiles.tile7], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006070000000000000000000000000005040000000000000000000000000000030101010101010101010101010101010102020202020202020202020202020202`, img`
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006070000000000000000080000050300040000000000000000000000000a090a0101010101010101010101010101010102020202020202020202020202020202`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -1179,7 +1216,7 @@ function Level_set () {
         . . . . . . . . . . . . . . . . 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         . . . . . . . . . . . . . . . . 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile1,myTiles.tile8], TileScale.Sixteen))
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,myTiles.tile3,myTiles.tile1,myTiles.tile8,tiles.util.object4,tiles.util.object5,sprites.builtin.forestTiles4], TileScale.Sixteen))
     ]
     tiles.loadMap(levels[1])
     tiles.connectMapById(levels[1], levels[2], ConnectionKind.T1)
@@ -1210,17 +1247,17 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Potion, function (sprite, otherS
         statusbar2.value += 1
         life_up.destroy()
     } else {
-        woodcutter.say("=_=", 200)
+        woodcutter.say("生命值已滿", 200)
     }
 })
 let life_up: Sprite = null
 let energy: Sprite = null
 let snails: Sprite = null
 let list: Sprite[] = []
-let princess: Sprite = null
 let Magnifying_glass: Sprite = null
 let projectile: Sprite = null
 let statusbar: StatusBarSprite = null
+let princess: Sprite = null
 let demon: Sprite = null
 let statusbar2: StatusBarSprite = null
 let woodcutter: Sprite = null
