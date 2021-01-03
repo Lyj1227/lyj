@@ -4,6 +4,7 @@ namespace SpriteKind {
     export const Potion = SpriteKind.create()
     export const Magnifying = SpriteKind.create()
     export const cage = SpriteKind.create()
+    export const big_snails = SpriteKind.create()
 }
 namespace ConnectionKind {
     export const T1 = ConnectionKind.create()
@@ -788,6 +789,13 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . f f f f f f . . . 
         . . . . . . . . . f f f f . . . . 
         `)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.big_snails, function (sprite, otherSprite) {
+    statusbar4.value += -7
+    if (statusbar4.value == 0) {
+        big_snails_kill += 1
+        otherSprite.destroy()
+    }
 })
 scene.onOverlapTile(SpriteKind.Player, myTiles.tile12, function (sprite, location) {
     if (levels.indexOf(tiles.getLoadedMap()) == 0) {
@@ -2036,7 +2044,7 @@ function doSomething () {
             ............ff4444444444444444444444ff4444444ff..
             .............ffff4444444444444444ffff444444fff...
             .................ffffffffffffffffffffffffff......
-            `, SpriteKind.Enemy)
+            `, SpriteKind.big_snails)
         big_snails.z = 0
         tiles.placeOnRandomTile(big_snails, tiles.util.object6)
         tiles.setTileAt(value4, myTiles.transparency16)
@@ -2296,6 +2304,13 @@ function Mob_Set () {
         tiles.setTileAt(value6, myTiles.transparency16)
     }
 }
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.big_snails, function (sprite, otherSprite) {
+    statusbar4.value += -24
+    if (statusbar4.value == 0) {
+        big_snails_kill += 1
+        otherSprite.destroy()
+    }
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     statusbar.value += 1
     otherSprite.destroy()
@@ -2330,9 +2345,10 @@ let life_up: Sprite = null
 let energy: Sprite = null
 let snails: Sprite = null
 let statusbar: StatusBarSprite = null
-let statusbar4: StatusBarSprite = null
 let big_snails: Sprite = null
 let list2: Sprite[] = []
+let big_snails_kill = 0
+let statusbar4: StatusBarSprite = null
 let cage2: Sprite = null
 let princess: Sprite = null
 let statusbar3: StatusBarSprite = null
@@ -2586,22 +2602,29 @@ game.onUpdate(function () {
         life_up.vy = 5
         life_up.follow(snails)
         snails_kill = 0
-        if (Lv == 11) {
-            Magnifying_glass = sprites.create(img`
-                f f f f f f f f f . 
-                f 1 1 1 1 1 1 f f . 
-                f 1 . . . . 1 f f . 
-                f 1 . 1 1 . 1 f f . 
-                f 1 . . . . 1 f f . 
-                f 1 1 1 1 1 1 f f . 
-                f f f f f f f f f . 
-                . . . . . . . f f . 
-                . . . . . . . f f . 
-                . . . . . . . f f . 
-                `, SpriteKind.Magnifying)
-            Magnifying_glass.z = 0
-            Magnifying_glass.destroy()
-        }
+    }
+    if (big_snails_kill == 1) {
+        Magnifying_glass = sprites.create(img`
+            . . . . . . f f f f . . . . . . 
+            . . . f f f f e e f f f f . . . 
+            . f f e e e e e e e e e f f f . 
+            f f e e e f f e e e e e f f f . 
+            f f e e f f e e f f f f e e f f 
+            f f e f f e e e e e e e e e f f 
+            e e e e e e e e e e e e e e e e 
+            e f e e e e e e e e e e e e e f 
+            f f e e e e e e e e e e f f f . 
+            e e f e e e e e e f f e f e e f 
+            e e e f e e e e e f e e e f f f 
+            f f e e f e e e e e e e e e f . 
+            f e f e e f f f e e e e e e f . 
+            . f f e e e e e e e e e f f f . 
+            . . f e e f f f f f f f f . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Magnifying)
+        Magnifying_glass.z = 0
+        Magnifying_glass.destroy()
+        big_snails_kill = 0
     }
     if (controller.up.isPressed() || woodcutter.isHittingTile(CollisionDirection.Bottom)) {
         woodcutter.vy = 0
