@@ -5,6 +5,7 @@ namespace SpriteKind {
     export const Magnifying = SpriteKind.create()
     export const cage = SpriteKind.create()
     export const big_snails = SpriteKind.create()
+    export const fireball = SpriteKind.create()
 }
 namespace ConnectionKind {
     export const T1 = ConnectionKind.create()
@@ -770,6 +771,11 @@ function Boss () {
         tiles.setTileAt(value3, myTiles.transparency16)
     }
 }
+sprites.onOverlap(SpriteKind.fireball, SpriteKind.Player, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    statusbar.value += -1
+    sprite.destroy()
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     woodcutter.setImage(img`
         . . . . . . . f f f f f f . . . . 
@@ -2151,7 +2157,7 @@ scene.onHitWall(SpriteKind.subordinate, function (sprite, location) {
             `)
         sprite.vx = sprite.vx * -1
     }
-    pause(0.01)
+    pause(1)
     if (sprite.tileKindAt(TileDirection.Bottom, myTiles.transparency16)) {
         sprite.vy = 250
     } else {
@@ -2279,7 +2285,7 @@ function Mob_Set () {
         }
         tiles.setTileAt(value5, tiles.util.arrow5)
     }
-    pause(1)
+    pause(0.1)
     for (let value6 of tiles.getTilesByType(tiles.util.arrow5)) {
         energy = sprites.create(img`
             . . . . . . . . . . . . . . . . 
@@ -2339,16 +2345,17 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         woodcutter.y += 5
     }
 })
+let fireball: Sprite = null
 let Magnifying_glass: Sprite = null
 let projectile: Sprite = null
 let life_up: Sprite = null
 let energy: Sprite = null
 let snails: Sprite = null
-let statusbar: StatusBarSprite = null
 let big_snails: Sprite = null
 let list2: Sprite[] = []
 let big_snails_kill = 0
 let statusbar4: StatusBarSprite = null
+let statusbar: StatusBarSprite = null
 let cage2: Sprite = null
 let princess: Sprite = null
 let statusbar3: StatusBarSprite = null
@@ -2586,6 +2593,13 @@ game.onUpdate(function () {
         demon.destroy()
         demon.say("NO~~~~")
     }
+    if (controller.up.isPressed() || woodcutter.isHittingTile(CollisionDirection.Bottom)) {
+        woodcutter.vy = 0
+    } else {
+        woodcutter.vy = 200
+    }
+})
+game.onUpdate(function () {
     if (snails_kill == 5 && Math.percentChance(5)) {
         life_up = sprites.create(img`
             . . . . . . . . . 
@@ -2625,10 +2639,28 @@ game.onUpdate(function () {
         Magnifying_glass.z = 0
         Magnifying_glass.destroy()
         big_snails_kill = 0
+        pause(100)
     }
-    if (controller.up.isPressed() || woodcutter.isHittingTile(CollisionDirection.Bottom)) {
-        woodcutter.vy = 0
-    } else {
-        woodcutter.vy = 200
+    if (Lv == 11 && game.ask("ABC", "123")) {
+        fireball = sprites.create(img`
+            2 2 2 2 . . . 2 2 . 2 2 . . . 2 
+            . 2 2 2 2 . 2 2 2 2 2 2 . . . 2 
+            . 2 2 2 2 . 2 2 2 2 2 2 . . 2 2 
+            . 2 . 2 2 2 2 2 . . 2 2 . 2 2 2 
+            2 2 2 . 2 2 2 2 2 2 2 2 2 2 2 . 
+            . 2 2 2 2 2 e e e 2 2 2 2 2 . . 
+            . . 2 2 2 e f f f e 2 2 2 . . 2 
+            . 2 2 2 e e e e e e e 2 2 . . 2 
+            . 2 . 2 e f e e e f e 2 2 2 2 2 
+            . 2 2 2 e f f e f f e 2 2 2 2 . 
+            . 2 2 2 2 e f f e e 2 2 2 2 . . 
+            2 . 2 2 2 2 e e e 2 2 2 2 . . . 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
+            . 2 2 . 2 2 2 . . 2 2 2 2 2 . . 
+            . . . . . 2 . . . . 2 2 2 . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.fireball)
+        fireball.x = randint(5, 200)
+        fireball.vy = randint(40, 55)
     }
 })
