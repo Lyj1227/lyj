@@ -642,7 +642,7 @@ function Level_set () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . 2 2 . . . . 
+        . . . . . . . . . . 2 . . . . . 
         . . . . . . . . . . 2 . . 2 2 2 
         2 . . . . . . . . . 2 . . 2 . 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
@@ -1202,6 +1202,7 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile12, function (sprite, locatio
         Lv += 1
         Boss()
     } else if (levels.indexOf(tiles.getLoadedMap()) == 10) {
+        Lv += 1
         woodcutter.say("XD")
     }
     tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0])
@@ -2157,7 +2158,6 @@ scene.onHitWall(SpriteKind.subordinate, function (sprite, location) {
             `)
         sprite.vx = sprite.vx * -1
     }
-    pause(1)
     if (sprite.tileKindAt(TileDirection.Bottom, myTiles.transparency16)) {
         sprite.vy = 250
     } else {
@@ -2321,6 +2321,15 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     statusbar.value += 1
     otherSprite.destroy()
 })
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    Lv = 10
+    tiles.loadMap(levels[9])
+    tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0])
+    tiles.replaceAllTiles(sprites.dungeon.collectibleInsignia, myTiles.transparency16)
+    tiles.destroySpritesOfKind(SpriteKind.Food)
+    tiles.destroySpritesOfKind(SpriteKind.subordinate)
+    Mob_Set()
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Potion, function (sprite, otherSprite) {
     if (info.life() < 5) {
         info.changeLifeBy(1)
@@ -2346,7 +2355,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     }
 })
 let fireball: Sprite = null
-let Magnifying_glass: Sprite = null
+let Rock: Sprite = null
 let projectile: Sprite = null
 let life_up: Sprite = null
 let energy: Sprite = null
@@ -2496,22 +2505,21 @@ Mob_Set()
 game.onUpdate(function () {
     if (statusbar.value >= 20 && controller.B.isPressed()) {
         if (woodcutter.image.equals(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . f f f f f f . . . . . . 
-            . . f f 5 5 5 5 9 c f . . . . . 
-            . f f 5 5 5 5 9 c c c f . . . . 
-            . f 5 5 5 9 9 5 5 5 5 f . . . . 
-            . f 9 9 9 5 5 c c c c 5 f . 8 8 
-            . f 5 c c c f f f f 5 c f 8 9 8 
-            f f f f f f f a a a f f 8 9 9 8 
-            f f d a a a f 1 d a a 8 9 9 8 . 
-            f d d a a d f f d d f 8 9 8 . . 
-            . f d d a d d d d f f 8 8 8 . . 
-            . . f f d d d d f c f d f . . . 
-            . . . f c c c c c c f f . . . . 
-            . . . f e 2 e 2 e 2 f . . . . . 
-            . . . f 4 4 4 4 4 4 f . . . . . 
-            . . . . f f f f f f . . . . . . 
+            . . . . f f f f f f . . . . . . . 
+            . . f f 5 5 5 5 9 c f . . . . . . 
+            . f f 5 5 5 5 9 c c c f . . . . . 
+            . f 5 5 5 5 9 c c 5 5 f . . . 8 8 
+            . f 9 9 9 9 9 5 c c c 5 f . 8 9 8 
+            . f 5 c c c f f f f f c f 8 9 9 8 
+            f f f f f f f a a a f f 8 9 9 8 . 
+            . f d a a a f 1 d a f 8 9 9 8 . . 
+            . f d a d d f f d d f 8 9 8 . . . 
+            . f f d d d d d d f f 8 8 8 . . . 
+            . . f f f f f f f f d d f . . . . 
+            . . . f 2 4 2 4 f d d f . . . . . 
+            . . . f 4 2 4 2 f f f . . . . . . 
+            . . . f f f f f f . . . . . . . . 
+            . . . . f f f f . . . . . . . . . 
             `)) {
             projectile = sprites.createProjectileFromSprite(img`
                 .........4..3..44.......
@@ -2618,7 +2626,7 @@ game.onUpdate(function () {
         snails_kill = 0
     }
     if (big_snails_kill == 1) {
-        Magnifying_glass = sprites.create(img`
+        Rock = sprites.createProjectileFromSprite(img`
             . . . . . . f f f f . . . . . . 
             . . . f f f f e e f f f f . . . 
             . f f e e e e e e e e e f f f . 
@@ -2635,13 +2643,19 @@ game.onUpdate(function () {
             . f f e e e e e e e e e f f f . 
             . . f e e f f f f f f f f . . . 
             . . . . . . . . . . . . . . . . 
-            `, SpriteKind.Magnifying)
-        Magnifying_glass.z = 0
-        Magnifying_glass.destroy()
+            `, big_snails, 0, 50)
+        Rock.z = 0
+        Rock.destroy()
         big_snails_kill = 0
         pause(100)
     }
-    if (Lv == 11 && game.ask("ABC", "123")) {
+    if (Lv == 10 && statusbar3.value == 50) {
+        statusbar3.value += -1
+        tiles.loadMap(levels[11])
+    }
+})
+game.onUpdateInterval(500, function () {
+    if (Lv == 11) {
         fireball = sprites.create(img`
             2 2 2 2 . . . 2 2 . 2 2 . . . 2 
             . 2 2 2 2 . 2 2 2 2 2 2 . . . 2 
@@ -2662,5 +2676,6 @@ game.onUpdate(function () {
             `, SpriteKind.fireball)
         fireball.x = randint(5, 200)
         fireball.vy = randint(40, 55)
+        fireball.setFlag(SpriteFlag.AutoDestroy, true)
     }
 })
