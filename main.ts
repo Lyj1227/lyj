@@ -6,6 +6,7 @@ namespace SpriteKind {
     export const cage = SpriteKind.create()
     export const big_snails = SpriteKind.create()
     export const fireball = SpriteKind.create()
+    export const rock = SpriteKind.create()
 }
 namespace ConnectionKind {
     export const T1 = ConnectionKind.create()
@@ -640,11 +641,11 @@ function Level_set () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . 2 . . . . . 
-        . . . . . . . . . . 2 . . 2 2 2 
-        2 . . . . . . . . . 2 . . 2 . 2 
+        . . . . . . . . . . . 2 . . . . 
+        . . . . . . . . . . . . 2 . . . 
+        . . . . . . . . . . . . 2 . . . 
+        . . . . . . . . . . . 2 2 2 2 2 
+        2 . . . . . . . . . . . . 2 . 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.dungeon.collectibleInsignia,myTiles.tile1,tiles.util.object4,tiles.util.object5,sprites.castle.tilePath3], TileScale.Sixteen)),
@@ -778,23 +779,25 @@ sprites.onOverlap(SpriteKind.fireball, SpriteKind.Player, function (sprite, othe
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     woodcutter.setImage(img`
-        . . . . . . . f f f f f f . . . . 
-        . . . . . . f c 9 5 5 5 5 f f . . 
-        . . . . . f c c c 9 5 5 5 5 f f . 
-        8 8 . . . f 5 5 c c 9 5 5 5 5 f . 
-        8 9 8 . f 5 c c c 5 9 9 9 9 9 f . 
-        8 9 9 8 f c 5 f f f f c c c 5 f . 
-        . 8 9 9 8 f f a a a f f f f f f f 
-        . . 8 9 9 8 f a d 1 f a a a d f . 
-        . . . 8 9 8 f d d f f d d a d f . 
-        . . . 8 8 8 f f d d d d d d f f . 
-        . . . . f d d d f f f f f f f . . 
-        . . . . . f f f f 4 2 4 2 f . . . 
-        . . . . . . . . f 2 4 2 4 f . . . 
-        . . . . . . . . f 4 4 4 4 f . . . 
-        . . . . . . . . f f f f f f . . . 
-        . . . . . . . . . f f f f . . . . 
+        . . . . . f f f f f f . . . . 
+        . . . . f c 9 5 5 5 5 f f . . 
+        . . . f c c c 9 5 5 5 5 f f . 
+        . . . f 5 5 c c 9 5 5 5 5 f . 
+        . . f 5 c c c 5 9 9 9 9 9 f . 
+        8 8 f c 5 f f f f c c c 5 f . 
+        8 9 8 f f a a a f f f f f f f 
+        8 9 9 8 f a d 1 f a a a d f . 
+        . 8 9 8 f d d f f d d a d f . 
+        . 8 8 8 f f d d d d d d f f . 
+        . . f d d d f f f f f f f . . 
+        . . . f f f f 4 2 4 2 f . . . 
+        . . . . . . f 2 4 2 4 f . . . 
+        . . . . . . f f f f f f . . . 
+        . . . . . . . f f f f . . . . 
         `)
+})
+info.onCountdownEnd(function () {
+    Rock.destroy()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.big_snails, function (sprite, otherSprite) {
     statusbar4.value += -7
@@ -1817,24 +1820,24 @@ function 圖像擋專區 () {
         . . . . . . . . . . . . . . 2 2 
         . . . . . . . . . . . . . . . . 
         `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.builtin.forestTiles0,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.castle.tileDarkGrass1,sprites.castle.tileGrass1,sprites.castle.tileGrass3,sprites.builtin.coral2,sprites.castle.rock1,sprites.castle.rock2], TileScale.Sixteen))
-    tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000030101010101010101010101010101010102020202020202020202020202020202`, img`
+    tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000004000000000006000400000000000000060600000000000006000500000006000000000004000000000606060600000000000000060000000000000000000500000600050006000000000000000606000000000600000000060000000000000006000000000000000000000000000000000000000600000500000600060000000000000000000606000000000000000006060000000000000000000000060600000000000600000000000000000000000000000000000000000000030000000000000000000000000000000201010101010101010101010101010102020202020202020202020202020202`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . 2 . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
+        2 2 . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
+        . . . . . 2 . . . . . . . . . . 
+        . . . . . . . . 2 . . . . . . . 
         . . . . . . . . . . . . . . . . 
+        . . . . . 2 . . . . . . . . . . 
+        . . 2 . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 2 
+        2 . . . . . . . . . . . . . . . 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         . . . . . . . . . . . . . . . . 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.builtin.forestTiles0], TileScale.Sixteen))
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.castle.tilePath3,myTiles.tile13,myTiles.tile14,myTiles.tile15], TileScale.Sixteen))
     scene.setBackgroundImage(img`
         8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
         8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
@@ -2203,23 +2206,47 @@ function Roles_Set () {
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     woodcutter.setImage(img`
-        . . . . f f f f f f . . . . . . . 
-        . . f f 5 5 5 5 9 c f . . . . . . 
-        . f f 5 5 5 5 9 c c c f . . . . . 
-        . f 5 5 5 5 9 c c 5 5 f . . . 8 8 
-        . f 9 9 9 9 9 5 c c c 5 f . 8 9 8 
-        . f 5 c c c f f f f f c f 8 9 9 8 
-        f f f f f f f a a a f f 8 9 9 8 . 
-        . f d a a a f 1 d a f 8 9 9 8 . . 
-        . f d a d d f f d d f 8 9 8 . . . 
-        . f f d d d d d d f f 8 8 8 . . . 
-        . . f f f f f f f f d d f . . . . 
-        . . . f 2 4 2 4 f d d f . . . . . 
-        . . . f 4 2 4 2 f f f . . . . . . 
-        . . . f 4 4 4 4 f . . . . . . . . 
-        . . . f f f f f f . . . . . . . . 
-        . . . . f f f f . . . . . . . . . 
+        . . . . f f f f f f . . . . . 
+        . . f f 5 5 5 5 9 c f . . . . 
+        . f f 5 5 5 5 9 c c c f . . . 
+        . f 5 5 5 5 9 c c 5 5 f . . . 
+        . f 9 9 9 9 9 5 c c c 5 f . . 
+        . f 5 c c c f f f f f c f 8 8 
+        f f f f f f f a a a f f 8 9 8 
+        . f d a a a f 1 d a f 8 9 9 8 
+        . f d a d d f f d d f 8 9 8 . 
+        . f f d d d d d d f f 8 8 8 . 
+        . . f f f f f f f f d d f . . 
+        . . . f 2 4 2 4 f d d f . . . 
+        . . . f 4 2 4 2 f f f . . . . 
+        . . . f f f f f f . . . . . . 
+        . . . . f f f f . . . . . . . 
         `)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.rock, function (sprite, otherSprite) {
+    Rock.follow(woodcutter)
+    while (true) {
+        projectile2 = sprites.createProjectileFromSprite(img`
+            . . . . . . f f f f . . . . . . 
+            . . . f f f f e e f f f f . . . 
+            . f f e e e e e e e e e f f f . 
+            f f e e e f f e e e e e f f f . 
+            f f e e f f e e f f f f e e f f 
+            f f e f f e e e e e e e e e f f 
+            e e e e e e e e e e e e e e e e 
+            e f e e e e e e e e e e e e e f 
+            f f e e e e e e e e e e f f f . 
+            e e f e e e e e e f f e f e e f 
+            e e e f e e e e e f e e e f f f 
+            f f e e f e e e e e e e e e f . 
+            f e f e e f f f e e e e e e f . 
+            . f f e e e e e e e e e f f f . 
+            . . f e e f f f f f f f f . . . 
+            . . . . . . . . . . . . . . . . 
+            `, Rock, 50, 0)
+        projectile2.setFlag(SpriteFlag.AutoDestroy, true)
+        pause(100)
+    }
 })
 function Mob_Set () {
     for (let value5 of tiles.getTilesByType(sprites.dungeon.collectibleRedCrystal)) {
@@ -2321,15 +2348,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     statusbar.value += 1
     otherSprite.destroy()
 })
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    Lv = 10
-    tiles.loadMap(levels[9])
-    tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0])
-    tiles.replaceAllTiles(sprites.dungeon.collectibleInsignia, myTiles.transparency16)
-    tiles.destroySpritesOfKind(SpriteKind.Food)
-    tiles.destroySpritesOfKind(SpriteKind.subordinate)
-    Mob_Set()
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Potion, function (sprite, otherSprite) {
     if (info.life() < 5) {
         info.changeLifeBy(1)
@@ -2355,11 +2373,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     }
 })
 let fireball: Sprite = null
-let Rock: Sprite = null
+let projectile3: Sprite = null
 let projectile: Sprite = null
 let life_up: Sprite = null
 let energy: Sprite = null
 let snails: Sprite = null
+let projectile2: Sprite = null
 let big_snails: Sprite = null
 let list2: Sprite[] = []
 let big_snails_kill = 0
@@ -2374,6 +2393,7 @@ let snails_kill = 0
 let woodcutter: Sprite = null
 let Lv = 0
 let levels: tiles.WorldMap[] = []
+let Rock: Sprite = null
 let boss_HP = 0
 info.setLife(5)
 boss_HP = 150
@@ -2502,24 +2522,42 @@ scene.setBackgroundImage(img`
 Level_set()
 Roles_Set()
 Mob_Set()
+Rock = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.rock)
 game.onUpdate(function () {
     if (statusbar.value >= 20 && controller.B.isPressed()) {
         if (woodcutter.image.equals(img`
-            . . . . f f f f f f . . . . . . . 
-            . . f f 5 5 5 5 9 c f . . . . . . 
-            . f f 5 5 5 5 9 c c c f . . . . . 
-            . f 5 5 5 5 9 c c 5 5 f . . . 8 8 
-            . f 9 9 9 9 9 5 c c c 5 f . 8 9 8 
-            . f 5 c c c f f f f f c f 8 9 9 8 
-            f f f f f f f a a a f f 8 9 9 8 . 
-            . f d a a a f 1 d a f 8 9 9 8 . . 
-            . f d a d d f f d d f 8 9 8 . . . 
-            . f f d d d d d d f f 8 8 8 . . . 
-            . . f f f f f f f f d d f . . . . 
-            . . . f 2 4 2 4 f d d f . . . . . 
-            . . . f 4 2 4 2 f f f . . . . . . 
-            . . . f f f f f f . . . . . . . . 
-            . . . . f f f f . . . . . . . . . 
+            . . . . f f f f f f . . . . . 
+            . . f f 5 5 5 5 9 c f . . . . 
+            . f f 5 5 5 5 9 c c c f . . . 
+            . f 5 5 5 5 9 c c 5 5 f . . . 
+            . f 9 9 9 9 9 5 c c c 5 f . . 
+            . f 5 c c c f f f f f c f 8 8 
+            f f f f f f f a a a f f 8 9 8 
+            . f d a a a f 1 d a f 8 9 9 8 
+            . f d a d d f f d d f 8 9 8 . 
+            . f f d d d d d d f f 8 8 8 . 
+            . . f f f f f f f f d d f . . 
+            . . . f 2 4 2 4 f d d f . . . 
+            . . . f 4 2 4 2 f f f . . . . 
+            . . . f f f f f f . . . . . . 
+            . . . . f f f f . . . . . . . 
             `)) {
             projectile = sprites.createProjectileFromSprite(img`
                 .........4..3..44.......
@@ -2548,24 +2586,25 @@ game.onUpdate(function () {
                 ........3......333......
                 `, woodcutter, 50, 0)
             woodcutter.x += -0.5
+            Rock.vx += 50
+            pause(100)
         }
         if (woodcutter.image.equals(img`
-            . . . . . . . f f f f f f . . . . 
-            . . . . . . f c 9 5 5 5 5 f f . . 
-            . . . . . f c c c 9 5 5 5 5 f f . 
-            8 8 . . . f 5 5 c c 9 5 5 5 5 f . 
-            8 9 8 . f 5 c c c 5 9 9 9 9 9 f . 
-            8 9 9 8 f c 5 f f f f c c c 5 f . 
-            . 8 9 9 8 f f a a a f f f f f f f 
-            . . 8 9 9 8 f a d 1 f a a a d f . 
-            . . . 8 9 8 f d d f f d d a d f . 
-            . . . 8 8 8 f f d d d d d d f f . 
-            . . . . f d d d f f f f f f f . . 
-            . . . . . f f f f 4 2 4 2 f . . . 
-            . . . . . . . . f 2 4 2 4 f . . . 
-            . . . . . . . . f 4 4 4 4 f . . . 
-            . . . . . . . . f f f f f f . . . 
-            . . . . . . . . . f f f f . . . . 
+            . . . . . f f f f f f . . . . 
+            . . . . f c 9 5 5 5 5 f f . . 
+            . . . f c c c 9 5 5 5 5 f f . 
+            . . . f 5 5 c c 9 5 5 5 5 f . 
+            . . f 5 c c c 5 9 9 9 9 9 f . 
+            8 8 f c 5 f f f f c c c 5 f . 
+            8 9 8 f f a a a f f f f f f f 
+            8 9 9 8 f a d 1 f a a a d f . 
+            . 8 9 8 f d d f f d d a d f . 
+            . 8 8 8 f f d d d d d d f f . 
+            . . f d d d f f f f f f f . . 
+            . . . f f f f 4 2 4 2 f . . . 
+            . . . . . . f 2 4 2 4 f . . . 
+            . . . . . . f f f f f f . . . 
+            . . . . . . . f f f f . . . . 
             `)) {
             projectile = sprites.createProjectileFromSprite(img`
                 .........4..3..44.......
@@ -2594,6 +2633,8 @@ game.onUpdate(function () {
                 ........3......333......
                 `, woodcutter, -50, 0)
             woodcutter.x += 0.5
+            Rock.vx += -50
+            pause(100)
         }
         statusbar.value += -20
     }
@@ -2626,7 +2667,7 @@ game.onUpdate(function () {
         snails_kill = 0
     }
     if (big_snails_kill == 1) {
-        Rock = sprites.createProjectileFromSprite(img`
+        Rock = sprites.create(img`
             . . . . . . f f f f . . . . . . 
             . . . f f f f e e f f f f . . . 
             . f f e e e e e e e e e f f f . 
@@ -2643,13 +2684,34 @@ game.onUpdate(function () {
             . f f e e e e e e e e e f f f . 
             . . f e e f f f f f f f f . . . 
             . . . . . . . . . . . . . . . . 
-            `, big_snails, 0, 50)
+            `, SpriteKind.rock)
         Rock.z = 0
-        Rock.destroy()
         big_snails_kill = 0
-        pause(100)
+        info.startCountdown(8)
     }
-    if (Lv == 10 && statusbar3.value == 50) {
+    if (Lv == 11 && statusbar3.value <= 50) {
+        while (true) {
+            projectile3 = sprites.createProjectileFromSprite(img`
+                . . . . . 2 2 . . 
+                . . . . . 2 2 2 . 
+                . . . . 2 2 2 2 . 
+                . . . . 2 2 2 2 . 
+                . . . 2 2 2 2 . . 
+                . . 2 2 2 2 2 . . 
+                . 2 2 2 2 2 2 2 . 
+                . 2 e e e 2 2 2 . 
+                2 2 e e e e e 2 2 
+                2 e e e e e e e 2 
+                2 2 e e e e e e 2 
+                . 2 e e e e e 2 . 
+                . 2 2 e e e 2 2 . 
+                . . . 2 2 2 . . . 
+                `, demon, -50, 0)
+            projectile3.setFlag(SpriteFlag.AutoDestroy, true)
+            pause(100)
+        }
+    }
+    if (Lv >= 10 && statusbar3.value == 50) {
         statusbar3.value += -1
         tiles.loadMap(levels[11])
     }
