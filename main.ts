@@ -439,7 +439,7 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile3, function (sprite, location
     Mob_Set()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.subordinate, function (sprite, otherSprite) {
-    if (otherSprite.y - 5 > sprite.y + 5) {
+    if (otherSprite.y - 6 > sprite.y + 6) {
         otherSprite.destroy()
         snails_kill += 1
     } else {
@@ -448,6 +448,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.subordinate, function (sprite, o
         info.changeLifeBy(-1)
         pause(500)
     }
+})
+controller.down.onEvent(ControllerButtonEvent.Repeated, function () {
+    statusbar.value += 160
+    statusbar2.value += 1
+    info.changeLifeBy(1)
 })
 function Level_set () {
     levels = [
@@ -683,44 +688,29 @@ function Level_set () {
 function Boss () {
     for (let value of tiles.getTilesByType(tiles.util.object4)) {
         demon = sprites.create(img`
-            .......ffffffff.......
-            .......f22bbbbf.......
-            .....fff22bbbbff......
-            .....f22222bbbbf......
-            .....fbb2222222fff....
-            ....ffb2222222222ff...
-            ...f222222222222222f..
-            ..f2222f1222f122222f..
-            ..f2222ff222ff22222f..
-            ..f2222222222222222f..
-            ..f2333222222233322f..
-            ..f2333222222233322f..
-            ..f2222222222222222f..
-            ...ff222222222222ff...
-            ....ffffffffffffff....
-            .....f1f5f15f1f5f.....
-            ..ffffffffffffffffff..
-            .fbbbbbf1f51f5fcccccf.
-            fbbfbbbffffffffccffccf
-            fbbfbffcf2222fbfcffccf
-            fbbfbffcf2222fbfcffccf
-            fbbfbfcccf22fbbfccfccf
-            .fbfbffcff22ffbfcffcf.
-            ..ffffff222222ffffff..
-            ...f.ff22222222f2ff2f.
-            .......f22222222222f..
-            .......f222222222ff...
-            ........ffff22222f....
-            ...........ff222f.....
-            .............ff2f.....
-            ..............ff......
-            ...............ff.....
+            . . . . f f f f . . . . . 
+            . . f f 2 2 2 2 f f . . . 
+            . f 2 2 2 2 2 2 2 2 f . . 
+            . f 2 2 2 2 2 2 2 2 f . . 
+            f 2 2 1 f 2 2 2 2 2 2 f . 
+            f 2 2 f f 2 2 2 2 2 2 f . 
+            f 2 2 f f 2 2 2 2 2 2 f . 
+            f 2 2 2 2 2 2 2 2 2 2 f . 
+            f 2 2 2 3 3 2 2 2 2 2 f . 
+            . f 2 2 2 2 2 2 2 2 f . . 
+            . f f f f f f 2 2 f . . . 
+            . f 1 5 1 5 f 2 2 f . . . 
+            . f 5 1 5 1 f 2 2 f . f . 
+            . f f f f f f 2 2 f f 2 f 
+            . . . f 2 2 2 2 2 2 2 2 f 
+            . . . . f f 2 2 2 2 2 f . 
+            . . . . . . f f f f f . . 
             `, SpriteKind.Enemy)
         demon.z = 0
         tiles.placeOnRandomTile(demon, tiles.util.object4)
         tiles.setTileAt(value, myTiles.transparency16)
         statusbar3 = statusbars.create(75, 2, StatusBarKind.EnemyHealth)
-        statusbar3.attachToSprite(demon, 10, 0)
+        statusbar3.attachToSprite(demon, 0, -2)
         statusbar3.setColor(9, 0)
         statusbar3.value = boss_HP
         statusbar3.max = boss_HP
@@ -2057,13 +2047,15 @@ function doSomething () {
             `, SpriteKind.big_snails)
         big_snails.z = 0
         tiles.placeOnRandomTile(big_snails, tiles.util.object6)
+        big_snails.setVelocity(randint(-25, 0), 100)
         tiles.setTileAt(value4, myTiles.transparency16)
         statusbar4 = statusbars.create(15, 2, StatusBarKind.EnemyHealth)
-        statusbar4.attachToSprite(big_snails)
+        statusbar4.attachToSprite(big_snails, 0, 0)
         statusbar4.setColor(9, 0)
         statusbar4.value = 0
         statusbar4.max = 30
         statusbar4.positionDirection(CollisionDirection.Top)
+        woodcutter.setPosition(5, 70)
     }
 }
 function JUMP (woodcutter: Sprite, bool: boolean, num: number) {
@@ -2187,6 +2179,7 @@ function Roles_Set () {
         . . . . f f f f f f . . . . . . 
         `, SpriteKind.Player)
     woodcutter.z = 1
+    woodcutter.setFlag(SpriteFlag.StayInScreen, true)
     controller.moveSprite(woodcutter, 50, 0)
     scene.cameraFollowSprite(woodcutter)
     tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0])
@@ -2358,22 +2351,22 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Potion, function (sprite, otherS
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (Lv == 16) {
+    if (Lv == 10) {
         statusbar3.value += -24
         boss_HP += -24
         projectile.destroy(effects.spray, 500)
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (Lv == 16) {
+    if (Lv == 10) {
         statusbar3.value += -7
         boss_HP += -7
         woodcutter.x += -5
         woodcutter.y += 5
     }
 })
-let fireball: Sprite = null
 let projectile3: Sprite = null
+let fireball: Sprite = null
 let projectile: Sprite = null
 let life_up: Sprite = null
 let energy: Sprite = null
@@ -2383,11 +2376,11 @@ let big_snails: Sprite = null
 let list2: Sprite[] = []
 let big_snails_kill = 0
 let statusbar4: StatusBarSprite = null
-let statusbar: StatusBarSprite = null
 let cage2: Sprite = null
 let princess: Sprite = null
 let statusbar3: StatusBarSprite = null
 let demon: Sprite = null
+let statusbar: StatusBarSprite = null
 let statusbar2: StatusBarSprite = null
 let snails_kill = 0
 let woodcutter: Sprite = null
@@ -2689,35 +2682,72 @@ game.onUpdate(function () {
         big_snails_kill = 0
         info.startCountdown(8)
     }
-    if (Lv == 11 && statusbar3.value <= 50) {
-        while (true) {
-            projectile3 = sprites.createProjectileFromSprite(img`
-                . . . . . 2 2 . . 
-                . . . . . 2 2 2 . 
-                . . . . 2 2 2 2 . 
-                . . . . 2 2 2 2 . 
-                . . . 2 2 2 2 . . 
-                . . 2 2 2 2 2 . . 
-                . 2 2 2 2 2 2 2 . 
-                . 2 e e e 2 2 2 . 
-                2 2 e e e e e 2 2 
-                2 e e e e e e e 2 
-                2 2 e e e e e e 2 
-                . 2 e e e e e 2 . 
-                . 2 2 e e e 2 2 . 
-                . . . 2 2 2 . . . 
-                `, demon, -50, 0)
-            projectile3.setFlag(SpriteFlag.AutoDestroy, true)
-            pause(100)
-        }
-    }
-    if (Lv >= 10 && statusbar3.value == 50) {
+    if (Lv == 10 && !(statusbar3.value >= 51)) {
         statusbar3.value += -1
         tiles.loadMap(levels[11])
+        doSomething()
+    }
+    if (Lv >= 10) {
+        if (demon.image.equals(img`
+            . . . . f f f f . . . . . 
+            . . f f 2 2 2 2 f f . . . 
+            . f 2 2 2 2 2 2 2 2 f . . 
+            . f 2 2 2 2 2 2 2 2 f . . 
+            f 2 2 1 f 2 2 2 2 2 2 f . 
+            f 2 2 f f 2 2 2 2 2 2 f . 
+            f 2 2 f f 2 2 2 2 2 2 f . 
+            f 2 2 2 2 2 2 2 2 2 2 f . 
+            f 2 2 2 3 3 2 2 2 2 2 f . 
+            . f 2 2 2 2 2 2 2 2 f . . 
+            . f f f f f f 2 2 f . . . 
+            . f 1 5 1 5 f 2 2 f . . . 
+            . f 5 1 5 1 f 2 2 f . f . 
+            . f f f f f f 2 2 f f 2 f 
+            . . . f 2 2 2 2 2 2 2 2 f 
+            . . . . f f 2 2 2 2 2 f . 
+            . . . . . . f f f f f . . 
+            `) && statusbar3.value < 51) {
+            demon.setImage(img`
+                .......ffffffff.......
+                .......f22bbbbf.......
+                .....fff22bbbbff......
+                .....f22222bbbbf......
+                .....fbb2222222fff....
+                ....ffb2222222222ff...
+                ...f222222222222222f..
+                ..f2222f1222f122222f..
+                ..f2222ff222ff22222f..
+                ..f2222222222222222f..
+                ..f2333222222233322f..
+                ..f2333222222233322f..
+                ..f2222222222222222f..
+                ...ff222222222222ff...
+                ....ffffffffffffff....
+                .....f1f5f15f1f5f.....
+                ..ffffffffffffffffff..
+                .fbbbbbf1f51f5fcccccf.
+                fbbfbbbffffffffccffccf
+                fbbfbffcf2222fbfcffccf
+                fbbfbffcf2222fbfcffccf
+                fbbfbfcccf22fbbfccfccf
+                .fbfbffcff22ffbfcffcf.
+                ..ffffff222222ffffff..
+                ...f.ff22222222f2ff2f.
+                .......f22222222222f..
+                .......f222222222ff...
+                ........ffff22222f....
+                ...........ff222f.....
+                .............ff2f.....
+                ..............ff......
+                ...............ff.....
+                `)
+        } else if (statusbar3.value == 0) {
+            demon.destroy()
+        }
     }
 })
 game.onUpdateInterval(500, function () {
-    if (Lv == 11) {
+    if (Lv == 10) {
         fireball = sprites.create(img`
             2 2 2 2 . . . 2 2 . 2 2 . . . 2 
             . 2 2 2 2 . 2 2 2 2 2 2 . . . 2 
@@ -2736,8 +2766,28 @@ game.onUpdateInterval(500, function () {
             . . . . . 2 . . . . 2 2 2 . . . 
             . . . . . . . . . . . . . . . . 
             `, SpriteKind.fireball)
-        fireball.x = randint(5, 200)
+        fireball.x = randint(10, 300)
         fireball.vy = randint(40, 55)
-        fireball.setFlag(SpriteFlag.AutoDestroy, true)
+        fireball.setFlag(SpriteFlag.DestroyOnWall, true)
     }
+    if (Lv == 10 && statusbar3.value <= 50) {
+        projectile3 = sprites.createProjectileFromSprite(img`
+            . . . . . 2 2 . . 
+            . . . . . 2 2 2 . 
+            . . . . 2 2 2 2 . 
+            . . . . 2 2 2 2 . 
+            . . . 2 2 2 2 . . 
+            . . 2 2 2 2 2 . . 
+            . 2 2 2 2 2 2 2 . 
+            . 2 e e e 2 2 2 . 
+            2 2 e e e e e 2 2 
+            2 e e e e e e e 2 
+            2 2 e e e e e e 2 
+            . 2 e e e e e 2 . 
+            . 2 2 e e e 2 2 . 
+            . . . 2 2 2 . . . 
+            `, demon, -50, 0)
+        projectile3.setFlag(SpriteFlag.AutoDestroy, true)
+    }
+    woodcutter.say(Lv, 500)
 })
