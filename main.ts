@@ -441,6 +441,15 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile3, function (sprite, location
     tiles.destroySpritesOfKind(SpriteKind.subordinate)
     Mob_Set()
 })
+sprites.onOverlap(SpriteKind.rock, SpriteKind.big_snails, function (sprite, otherSprite) {
+    statusbar4.value += -9
+    if (statusbar4.value == 0) {
+        big_snails_kill += 1
+        otherSprite.destroy()
+    } else {
+        sprite.destroy()
+    }
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.subordinate, function (sprite, otherSprite) {
     if (otherSprite.y - 6 > sprite.y - 3) {
         otherSprite.destroy()
@@ -658,7 +667,7 @@ function Level_set () {
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.dungeon.collectibleInsignia,myTiles.tile1,tiles.util.object4,tiles.util.object5,sprites.castle.tilePath3,myTiles.tile14,myTiles.tile15], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000050000000000000500000000050000000000000500000000000000000000000600000000000505000505000006000005000500000000000000000000050000000000060000000000000000050000050000000500000000000000000000000000000500000500000000050000000005000000000000000000000000000000000000000000000005000000000005000000000500000000000000000500000000000000000000000003000000000000000000000000000000040000000000000000000000000000000201010101010101010101010101010102020202020202020202020202020202`, img`
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000050000000000000500000000050000000000000500000000000000000000000600000000000505000505000000000005000500000000000000000000050000000000000000000000000000050000050000060500000000000000000000000600000500000500000000050000000005000000000000000000000000000000000000000000000005000000000005000000000500000000000000000500000000000000000000000003000000000000000000000000000000040000000000000000000000000000000201010101010101010101010101010102020202020202020202020202020202`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -798,10 +807,11 @@ info.onCountdownEnd(function () {
     Rock.destroy()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.big_snails, function (sprite, otherSprite) {
-    if (statusbar3.value <= 50) {
-        statusbar4.value += -5
+    statusbar4.value += -5
+    if (woodcutter.x < big_snails.x) {
+        woodcutter.x += -5
     } else {
-        statusbar4.value += -7
+        woodcutter.x += 5
     }
     if (statusbar4.value == 0) {
         big_snails_kill += 1
@@ -2057,7 +2067,7 @@ function doSomething () {
             .............ffff4444444444444444ffff444444fff...
             .................ffffffffffffffffffffffffff......
             `, SpriteKind.big_snails)
-        big_snails.z = 0
+        big_snails.z = 1
         tiles.placeOnRandomTile(big_snails, myTiles.tile13)
         big_snails.setVelocity(randint(-25, 0), 100)
         tiles.setTileAt(value4, myTiles.transparency16)
@@ -2247,10 +2257,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.rock, function (sprite, otherSpr
             . f f e e e e e e e e e f f f . 
             . . f e e f f f f f f f f . . . 
             . . . . . . . . . . . . . . . . 
-            `, Rock, 50, 0)
-        projectile2.setFlag(SpriteFlag.AutoDestroy, true)
-        pause(100)
+            `, otherSprite, 50, 0)
+        projectile2.setFlag(SpriteFlag.DestroyOnWall, true)
+        pause(1000)
     }
+    otherSprite.destroy()
 })
 function Mob_Set () {
     for (let value5 of tiles.getTilesByType(sprites.dungeon.collectibleRedCrystal)) {
@@ -2346,11 +2357,22 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.big_snails, function (sprite
     if (statusbar4.value == 0) {
         big_snails_kill += 1
         otherSprite.destroy()
+    } else {
+        sprite.destroy()
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     statusbar.value += 1
     otherSprite.destroy()
+})
+sprites.onOverlap(SpriteKind.rock, SpriteKind.Enemy, function (sprite, otherSprite) {
+    statusbar3.value += -9
+    boss_HP += -9
+    if (statusbar3.value == 0) {
+        otherSprite.destroy()
+    } else {
+        sprite.destroy()
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Potion, function (sprite, otherSprite) {
     if (info.life() < 5) {
@@ -2363,8 +2385,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Potion, function (sprite, otherS
     }
 })
 function Plot () {
-    game.splash("12349674354", "xdryhsthdtuyjty")
-    game.splash("lkij;.lpoilj", "654968454")
+    game.splash("在平安夜的夜晚，仙境奇幻國發生了一起可怕的事件。")
+    game.splash("可怕的惡魔在夜裡把櫻桃公主抓走了！")
+    game.splash("櫻桃公主是國王唯一的女兒，個性善良且溫暖，備受人民愛戴。國王和皇后非常著急，國王立刻下了一道命令：")
+    game.splash("「若有人能將公主救出並帶回皇宮，本王必定重賞。」")
+    game.splash("此時，喬夫得知了國王下的命令，他自從父親去世後就由母親獨自扶養長大。如今母親長期臥病在床")
+    game.splash("喬夫便想去將公主救出，將國王賞賜的重金拿去請醫生救治病重的母親。")
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (Lv == 10) {
@@ -2393,10 +2419,8 @@ let life_up: Sprite = null
 let energy: Sprite = null
 let snails: Sprite = null
 let projectile2: Sprite = null
-let big_snails: Sprite = null
 let list2: Sprite[] = []
-let big_snails_kill = 0
-let statusbar4: StatusBarSprite = null
+let big_snails: Sprite = null
 let cage2: Sprite = null
 let princess: Sprite = null
 let statusbar3: StatusBarSprite = null
@@ -2404,6 +2428,8 @@ let demon: Sprite = null
 let statusbar: StatusBarSprite = null
 let statusbar2: StatusBarSprite = null
 let snails_kill = 0
+let big_snails_kill = 0
+let statusbar4: StatusBarSprite = null
 let woodcutter: Sprite = null
 let Lv = 0
 let levels: tiles.WorldMap[] = []
@@ -2657,7 +2683,7 @@ game.onUpdate(function () {
         }
         statusbar.value += -20
     }
-    if (boss_HP == 0) {
+    if (boss_HP <= 0) {
         demon.destroy()
         demon.say("NO~~~~")
     }
@@ -2774,7 +2800,7 @@ game.onUpdate(function () {
     }
 })
 game.onUpdateInterval(500, function () {
-    if (Lv == 10) {
+    if (Lv == 10 && !(boss_HP <= 0)) {
         fireball = sprites.create(img`
             2 2 2 2 . . . 2 2 . 2 2 . . . 2 
             . 2 2 2 2 . 2 2 2 2 2 2 . . . 2 
@@ -2814,6 +2840,6 @@ game.onUpdateInterval(500, function () {
             . 2 2 e e e 2 2 . 
             . . . 2 2 2 . . . 
             `, demon, -50, 0)
-        projectile3.setFlag(SpriteFlag.AutoDestroy, true)
+        projectile3.setFlag(SpriteFlag.DestroyOnWall, true)
     }
 })
