@@ -8,6 +8,9 @@ namespace SpriteKind {
     export const fireball = SpriteKind.create()
     export const rock = SpriteKind.create()
 }
+namespace StatusBarKind {
+    export const boos = StatusBarKind.create()
+}
 namespace ConnectionKind {
     export const T1 = ConnectionKind.create()
     export const T2 = ConnectionKind.create()
@@ -439,7 +442,7 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile3, function (sprite, location
     Mob_Set()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.subordinate, function (sprite, otherSprite) {
-    if (otherSprite.y - 6 > sprite.y + 6) {
+    if (otherSprite.y - 6 > sprite.y - 3) {
         otherSprite.destroy()
         snails_kill += 1
     } else {
@@ -453,6 +456,7 @@ controller.down.onEvent(ControllerButtonEvent.Repeated, function () {
     statusbar.value += 160
     statusbar2.value += 1
     info.changeLifeBy(1)
+    pause(500)
 })
 function Level_set () {
     levels = [
@@ -636,42 +640,42 @@ function Level_set () {
         2 2 2 . . . . . . . 2 2 2 2 2 2 
         . . . . . . . . . . . 2 2 2 2 . 
         `, [myTiles.transparency16,sprites.dungeon.darkGroundNorth,sprites.builtin.forestTiles0,sprites.castle.rock2,sprites.castle.rock1,sprites.castle.tileGrass2,sprites.castle.tileDarkGrass2,sprites.dungeon.collectibleInsignia,myTiles.tile1,myTiles.tile11,myTiles.tile12,sprites.dungeon.collectibleRedCrystal,tiles.util.arrow5], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000404000000000000000000050000000003000000000000000000000000000000070000000000000000000000000006000201010101010101010101010101010102020202020202020202020202020202`, img`
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000090000000000000900000000090000000000000900000000000000000000000000000000000909000909000000000009000900000000000000000000090008000000000000000000000000090000090000080900000000000008000000000000000900000900000000090000000009000000000000000000000000000000000000000000000009000000000009000000000900000000000404000900000000000000000500000003000000000000000000000000000000070000000000000000000000000006000201010101010101010101010101010102020202020202020202020202020202`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
+        . 2 2 . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . 2 . . . . 
+        . . . . . . . 2 . . . . . . . . 
         . . . . . . . . . . . . 2 . . . 
-        . . . . . . . . . . . . 2 . . . 
-        . . . . . . . . . . . 2 2 2 2 2 
+        . . . . . 2 . . . . . . . 2 . . 
+        . . . 2 . . . . . . . . . 2 . . 
+        . . . . . . . . . . . . 2 2 2 2 
         2 . . . . . . . . . . . . 2 . 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.dungeon.collectibleInsignia,myTiles.tile1,tiles.util.object4,tiles.util.object5,sprites.castle.tilePath3], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005050500030000000000000000000000000000000000000000060000000000000000000000000004000201010101010101010101010101010102020202020202020202020202020202`, img`
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.dungeon.collectibleInsignia,myTiles.tile1,tiles.util.object4,tiles.util.object5,sprites.castle.tilePath3,myTiles.tile14,myTiles.tile15], TileScale.Sixteen)),
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000050000000000000500000000050000000000000500000000000000000000000600000000000505000505000006000005000500000000000000000000050000000000060000000000000000050000050000000500000000000000000000000000000500000500000000050000000005000000000000000000000000000000000000000000000005000000000005000000000500000000000000000500000000000000000000000003000000000000000000000000000000040000000000000000000000000000000201010101010101010101010101010102020202020202020202020202020202`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
+        . 2 2 . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . 2 . . . 
+        . . . . . . . . . . . . . 2 . . 
+        . . . . . . . . . . . . . 2 . . 
         . . . . . . . . . . . . . 2 2 2 
         2 . . . . . . . . . . . . 2 . 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,tiles.util.object4,tiles.util.object5,tiles.util.object6,sprites.castle.tilePath3,myTiles.tile3], TileScale.Sixteen))
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.dungeon.collectibleInsignia,sprites.castle.tilePath3,myTiles.tile15,myTiles.tile13], TileScale.Sixteen))
     ]
     tiles.loadMap(levels[0])
     tiles.connectMapById(levels[0], levels[1], ConnectionKind.T1)
@@ -709,11 +713,11 @@ function Boss () {
         demon.z = 0
         tiles.placeOnRandomTile(demon, tiles.util.object4)
         tiles.setTileAt(value, myTiles.transparency16)
-        statusbar3 = statusbars.create(75, 2, StatusBarKind.EnemyHealth)
-        statusbar3.attachToSprite(demon, 0, -2)
+        statusbar3 = statusbars.create(75, 2, StatusBarKind.boos)
+        statusbar3.attachToSprite(demon, 0, 10)
         statusbar3.setColor(9, 0)
         statusbar3.value = boss_HP
-        statusbar3.max = boss_HP
+        statusbar3.max = 150
         statusbar3.positionDirection(CollisionDirection.Top)
     }
     for (let value2 of tiles.getTilesByType(tiles.util.object5)) {
@@ -768,61 +772,8 @@ sprites.onOverlap(SpriteKind.fireball, SpriteKind.Player, function (sprite, othe
     sprite.destroy()
 })
 function EndPlot () {
-    game.splash("", "")
-    game.splash("", "")
-    scene.setBackgroundImage(img`
-        88888888888888888888888888883388888888385555558888
-        88888885858188883335558888888833818883858888888888
-        88888888888188338588888811111185331533588333338888
-        88333333338833885888888818885511118185833888888888
-        33881111883555588811111133333338888818888888558888
-        88888855115883188555588388888553335558885555885588
-        88885588551118331888855888855888118888118888888858
-        88858888815553883888888588588113888888833118888888
-        88888883188853858338888858881838885885888331188888
-        88888338885538388883388885881388553581588883311888
-        88833185888538531888388888813855813831858888838888
-        88388188888538531888538888838858813583185588883388
-        83881888885838583188858888838588813888388588888888
-        83888888885838583188858883385888813888838858888888
-        38888888858838888318885888858888183888813888888888
-        88888858858888888838885888858858183588883888888888
-        88588858858888188818888533388858188888888388888888
-        88855858858333313388888888133355583333388888888888
-        88888585858188888888888881818835331118833388888888
-        88888881811533388888888888881851188881188833888888
-        83333338188888833888888555118158555588888888888888
-        88511888358158888338888511555188811855588888888888
-        88155558358815588888881188888558858111155888888888
-        88888853885818858888888811388558351888188888888888
-        88888883885881888888888833885885385888888888888888
-        88888838885888188888888388885885838558888888888888
-        88888388885888888888883888851888583885588888888888
-        88888388885888888888838888888888888388888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88888888888888888888888888888888888888888888888888
-        88777777788888888888888888888888888888888888777777
-        87727777777777737777727777737772127777377777777722
-        77777222277727772773777772777772223727772772723722
-        77737121737777377717777777772737777777722277177722
-        72777222777277772777372227377777773777712273772717
-        77777777277731777772772127777277727772722277777777
-        `)
-    game.over(true, effects.confetti)
+    game.splash("1", "2")
+    game.splash("3", "4")
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     woodcutter.setImage(img`
@@ -2065,7 +2016,7 @@ function 圖像擋專區 () {
         `)
 }
 function doSomething () {
-    for (let value4 of tiles.getTilesByType(tiles.util.object6)) {
+    for (let value4 of tiles.getTilesByType(myTiles.tile13)) {
         big_snails = sprites.create(img`
             ..............................ffffffffffff.......
             ...........................ffff6666666666fff.....
@@ -2107,13 +2058,13 @@ function doSomething () {
             .................ffffffffffffffffffffffffff......
             `, SpriteKind.big_snails)
         big_snails.z = 0
-        tiles.placeOnRandomTile(big_snails, tiles.util.object6)
+        tiles.placeOnRandomTile(big_snails, myTiles.tile13)
         big_snails.setVelocity(randint(-25, 0), 100)
         tiles.setTileAt(value4, myTiles.transparency16)
         statusbar4 = statusbars.create(15, 2, StatusBarKind.EnemyHealth)
         statusbar4.attachToSprite(big_snails, 0, 0)
         statusbar4.setColor(9, 0)
-        statusbar4.value = 0
+        statusbar4.value = 30
         statusbar4.max = 30
         statusbar4.positionDirection(CollisionDirection.Top)
     }
@@ -2408,6 +2359,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Potion, function (sprite, otherS
         life_up.destroy()
     } else {
         woodcutter.say("生命值已滿", 200)
+        life_up.destroy()
     }
 })
 function Plot () {
@@ -2418,17 +2370,18 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     if (Lv == 10) {
         statusbar3.value += -24
         boss_HP += -24
-        projectile.destroy(effects.spray, 500)
+        sprite.destroy()
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (Lv == 10) {
         if (statusbar3.value <= 50) {
             statusbar3.value += -5
+            boss_HP += -5
         } else {
             statusbar3.value += -7
+            boss_HP += -7
         }
-        boss_HP += -7
         woodcutter.x += -5
         woodcutter.y += 5
     }
@@ -2653,7 +2606,7 @@ game.onUpdate(function () {
                 `, woodcutter, 50, 0)
             woodcutter.x += -0.5
             Rock.vx += 50
-            pause(100)
+            pause(200)
         }
         if (woodcutter.image.equals(img`
             . . . . . f f f f f f . . . . 
@@ -2700,7 +2653,7 @@ game.onUpdate(function () {
                 `, woodcutter, -50, 0)
             woodcutter.x += 0.5
             Rock.vx += -50
-            pause(100)
+            pause(200)
         }
         statusbar.value += -20
     }
@@ -2729,7 +2682,7 @@ game.onUpdate(function () {
             . . . . . . . . . 
             `, SpriteKind.Potion)
         life_up.vy = 5
-        life_up.follow(snails)
+        life_up.follow(woodcutter)
         snails_kill = 0
     }
     if (big_snails_kill == 1) {
@@ -2752,11 +2705,11 @@ game.onUpdate(function () {
             . . . . . . . . . . . . . . . . 
             `, SpriteKind.rock)
         Rock.z = 0
+        Rock.follow(woodcutter)
         big_snails_kill = 0
         info.startCountdown(8)
     }
     if (Lv == 10 && !(statusbar3.value >= 51)) {
-        statusbar3.value += -1
         tiles.loadMap(levels[11])
         doSomething()
     }
@@ -2814,12 +2767,8 @@ game.onUpdate(function () {
                 ..............ff......
                 ...............ff.....
                 `)
-        } else if (statusbar3.value == 0) {
-            demon.destroy()
-            snails.destroy()
-            big_snails.destroy()
-            Rock.destroy()
-            fireball.destroy()
+        }
+        if (boss_HP == 0) {
             EndPlot()
         }
     }
@@ -2867,5 +2816,4 @@ game.onUpdateInterval(500, function () {
             `, demon, -50, 0)
         projectile3.setFlag(SpriteFlag.AutoDestroy, true)
     }
-    woodcutter.say(Lv, 500)
 })
