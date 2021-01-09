@@ -1,15 +1,12 @@
 {
-    "name": "勇闖惡世界",
+    "name": "Brave_the_evil_world",
     "version": "0.1.1",
     "description": "",
     "dependencies": {
         "device": "*",
         "tilemaps": "github:microsoft/pxt-tilemaps#v1.10.0",
         "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.0",
-        "Timers": "github:microsoft/arcade-timers#v1.1.0",
         "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.24",
-        "settings-blocks": "github:microsoft/pxt-settings-blocks#v1.0.0",
-        "arcade-minimap": "github:microsoft/arcade-minimap#v0.6.1",
         "animation": "*"
     },
     "files": [
