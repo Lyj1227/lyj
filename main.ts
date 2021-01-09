@@ -467,11 +467,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.subordinate, function (sprite, o
         pause(500)
     }
 })
-controller.down.onEvent(ControllerButtonEvent.Repeated, function () {
-    statusbar.value += 160
-    statusbar2.value += 1
-    info.changeLifeBy(1)
-})
 function boos_mob_set () {
     for (let value5 of tiles.getTilesByType(myTiles.tile14)) {
         snails = sprites.create(img`
@@ -2797,12 +2792,12 @@ let energy: Sprite = null
 let projectile2: Sprite = null
 let list2: Sprite[] = []
 let big_snails2: Sprite = null
+let statusbar: StatusBarSprite = null
 let cage2: Sprite = null
 let princess: Sprite = null
 let statusbar3: StatusBarSprite = null
 let demon: Sprite = null
 let snails: Sprite = null
-let statusbar: StatusBarSprite = null
 let statusbar2: StatusBarSprite = null
 let snails_kill = 0
 let big_snails_kill = 0
@@ -3176,7 +3171,24 @@ game.onUpdate(function () {
         }
         if (boss_HP <= 0) {
             tiles.replaceAllTiles(myTiles.tile16, myTiles.transparency16)
-            snails.destroy()
+            sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . a a . . . 
+                . . . . . . . a a a a 9 9 a . . 
+                . . . . . . a 9 9 4 4 4 9 a a . 
+                . . . . . a 9 9 4 4 4 4 4 4 a . 
+                . a a a a 9 9 a a 4 4 4 4 4 4 a 
+                . a 3 3 a 9 a 3 3 a 4 4 4 4 4 a 
+                . f f 3 a 9 a 3 f f 9 4 4 4 a a 
+                . f f 3 a a a 3 f f 9 9 9 9 a a 
+                . . a 3 3 3 3 3 a a a 4 4 4 4 a 
+                . . a 3 3 3 3 3 a 3 3 a 9 4 4 a 
+                . a 3 3 3 3 3 3 a 3 3 a 9 9 a . 
+                . a 3 3 a 3 3 3 a 3 3 3 a a . . 
+                . a 3 3 3 3 3 3 3 3 3 3 3 3 a . 
+                . . a a a a 3 a 3 3 3 3 3 3 a . 
+                . . . . a a a a a a a a a a . . 
+                `, SpriteKind.subordinate).destroy()
             big_snails2.destroy()
             demon.destroy()
             scene.setBackgroundImage(img`
