@@ -428,8 +428,6 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile3, function (sprite, location
         tiles.loadConnectedMap(ConnectionKind.T10)
         Lv += 1
         Boss()
-    } else if (levels.indexOf(tiles.getLoadedMap()) == 10) {
-        woodcutter.say(":)")
     }
     if (levels.indexOf(tiles.getLoadedMap()) < 10) {
         tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[1])
@@ -466,6 +464,70 @@ controller.down.onEvent(ControllerButtonEvent.Repeated, function () {
     statusbar2.value += 1
     info.changeLifeBy(1)
 })
+function boos_mob_set () {
+    for (let value5 of tiles.getTilesByType(myTiles.tile14)) {
+        snails = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . a a . . . 
+            . . . . . . . a a a a 9 9 a . . 
+            . . . . . . a 9 9 4 4 4 9 a a . 
+            . . . . . a 9 9 4 4 4 4 4 4 a . 
+            . a a a a 9 9 a a 4 4 4 4 4 4 a 
+            . a 3 3 a 9 a 3 3 a 4 4 4 4 4 a 
+            . f f 3 a 9 a 3 f f 9 4 4 4 a a 
+            . f f 3 a a a 3 f f 9 9 9 9 a a 
+            . . a 3 3 3 3 3 a a a 4 4 4 4 a 
+            . . a 3 3 3 3 3 a 3 3 a 9 4 4 a 
+            . a 3 3 3 3 3 3 a 3 3 a 9 9 a . 
+            . a 3 3 a 3 3 3 a 3 3 3 a a . . 
+            . a 3 3 3 3 3 3 3 3 3 3 3 3 a . 
+            . . a a a a 3 a 3 3 3 3 3 3 a . 
+            . . . . a a a a a a a a a a . . 
+            `, SpriteKind.subordinate)
+        tiles.placeOnTile(snails, value5)
+        snails.z = 1
+        snails.setVelocity(randint(-25, 25), 0)
+        if (snails.vx < 0) {
+            snails.setImage(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . a a . . . 
+                . . . . . . . a a a a 9 9 a . . 
+                . . . . . . a 9 9 4 4 4 9 a a . 
+                . . . . . a 9 9 4 4 4 4 4 4 a . 
+                . a a a a 9 9 a a 4 4 4 4 4 4 a 
+                . a 3 3 a 9 a 3 3 a 4 4 4 4 4 a 
+                . f f 3 a 9 a 3 f f 9 4 4 4 a a 
+                . f f 3 a a a 3 f f 9 9 9 9 a a 
+                . . a 3 3 3 3 3 a a a 4 4 4 4 a 
+                . . a 3 3 3 3 3 a 3 3 a 9 4 4 a 
+                . a 3 3 3 3 3 3 a 3 3 a 9 9 a . 
+                . a 3 3 a 3 3 3 a 3 3 3 a a . . 
+                . a 3 3 3 3 3 3 3 3 3 3 3 3 a . 
+                . . a a a a 3 a 3 3 3 3 3 3 a . 
+                . . . . a a a a a a a a a a . . 
+                `)
+        } else {
+            snails.setImage(img`
+                . . . . . . . . . . . . . . . . 
+                . . . a a . . . . . . . . . . . 
+                . . a 9 9 a a a a . . . . . . . 
+                . a a 9 4 4 4 9 9 a . . . . . . 
+                . a 4 4 4 4 4 4 9 9 a . . . . . 
+                a 4 4 4 4 4 4 a a 9 9 a a a a . 
+                a 4 4 4 4 4 a 3 3 a 9 a 3 3 a . 
+                a a 4 4 4 9 f f 3 a 9 a 3 f f . 
+                a a 9 9 9 9 f f 3 a a a 3 f f . 
+                a 4 4 4 4 a a a 3 3 3 3 3 a . . 
+                a 4 4 9 a 3 3 a 3 3 3 3 3 a . . 
+                . a 9 9 a 3 3 a 3 3 3 3 3 3 a . 
+                . . a a 3 3 3 a 3 3 3 a 3 3 a . 
+                . a 3 3 3 3 3 3 3 3 3 3 3 3 a . 
+                . a 3 3 3 3 3 3 a 3 a a a a . . 
+                . . a a a a a a a a a a . . . . 
+                `)
+        }
+    }
+}
 function Level_set () {
     levels = [
     tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000605060006050609000000000000000602020200020202020000000000000602000000000001010100000000000502000000000000000000000000000602000000060600000000000000000602000005060202060600000008000002000006020201010202000000040006060006020101010101010506000202020202020103010103030102020701010101010101010101020201010102030303030303030303030101030303030201010101010202020201010101010101030101030101010303010103010301`, img`
@@ -666,7 +728,7 @@ function Level_set () {
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.dungeon.collectibleInsignia,myTiles.tile1,tiles.util.object4,tiles.util.object5,sprites.castle.tilePath3,myTiles.tile14,myTiles.tile15], TileScale.Sixteen)),
-    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000050000000000000500000000050000000000000500000000000000000000000600000000000505000505000000000005000500000000000000000000050000000000000000000000000000050000050000060500000000000000000000000600000500000500000000050000000005000000000000000000000000000000000000000000000005000000000005000000000500000000000000000500000000000000000000000003000000000000000000000000000000040000000000000000000000000000000201010101010101010101010101010102020202020202020202020202020202`, img`
+    tiles.createMap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000050000000000000500000000050000000000000500000000000000000000000600000000000505000505000000000005000500000000000000000000050000000000000000000000000000050000050000060500000000000000000000000600000500000500000000050000000005000000000000000000000000000000000000000000000005000000000005000000000500000000000000000500000000000000000000000003000000000000000000000000000000040000000000000000000000000700000201010101010101010101010101010102020202020202020202020202020202`, img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -680,10 +742,10 @@ function Level_set () {
         . . . . . . . . . . . . . 2 . . 
         . . . . . . . . . . . . . 2 . . 
         . . . . . . . . . . . . . 2 2 2 
-        2 . . . . . . . . . . . . 2 . 2 
+        2 . . . . . . . . . . . . . . 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
-        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.dungeon.collectibleInsignia,sprites.castle.tilePath3,myTiles.tile15,myTiles.tile13], TileScale.Sixteen))
+        `, [myTiles.transparency16,sprites.castle.tilePath2,sprites.castle.tilePath5,sprites.dungeon.collectibleInsignia,sprites.castle.tilePath3,myTiles.tile15,myTiles.tile13,myTiles.tile16], TileScale.Sixteen))
     ]
     tiles.loadMap(levels[0])
     tiles.connectMapById(levels[0], levels[1], ConnectionKind.T1)
@@ -807,7 +869,24 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 info.onCountdownEnd(function () {
-    Rock.destroy()
+    sprites.create(img`
+        . . . . . . f f f f . . . . . . 
+        . . . f f f f e e f f f f . . . 
+        . f f e e e e e e e e e f f f . 
+        f f e e e f f e e e e e f f f . 
+        f f e e f f e e f f f f e e f f 
+        f f e f f e e e e e e e e e f f 
+        e e e e e e e e e e e e e e e e 
+        e f e e e e e e e e e e e e e f 
+        f f e e e e e e e e e e f f f . 
+        e e f e e e e e e f f e f e e f 
+        e e e f e e e e e f e e e f f f 
+        f f e e f e e e e e e e e e f . 
+        f e f e e f f f e e e e e e f . 
+        . f f e e e e e e e e e f f f . 
+        . . f e e f f f f f f f f . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.rock).destroy()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.big_snails, function (sprite, otherSprite) {
     statusbar4.value += -5
@@ -1219,9 +1298,6 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile12, function (sprite, locatio
         tiles.loadConnectedMap(ConnectionKind.T10)
         Lv += 1
         Boss()
-    } else if (levels.indexOf(tiles.getLoadedMap()) == 10) {
-        Lv += 1
-        woodcutter.say("XD")
     }
     tiles.placeOnTile(woodcutter, tiles.getTilesByType(sprites.dungeon.collectibleInsignia)[0])
     tiles.replaceAllTiles(sprites.dungeon.collectibleInsignia, myTiles.transparency16)
@@ -1250,6 +1326,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.cage, function (sprite, otherSpr
             . . c c c c c c c c c c c c c . 
             `)
         woodcutter.x += -10
+        EndPlot()
+        game.over(true, effects.confetti)
     }
 })
 function 圖像擋專區 () {
@@ -2242,7 +2320,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.rock, function (sprite, otherSprite) {
     Rock.follow(woodcutter)
-    while (true && !(boss_HP == 0)) {
+    while (true && !(boss_HP <= 0)) {
         projectile2 = sprites.createProjectileFromSprite(img`
             . . . . . . f f f f . . . . . . 
             . . . f f f f e e f f f f . . . 
@@ -2420,7 +2498,6 @@ let fireball: Sprite = null
 let projectile: Sprite = null
 let life_up: Sprite = null
 let energy: Sprite = null
-let snails: Sprite = null
 let projectile2: Sprite = null
 let list2: Sprite[] = []
 let big_snails: Sprite = null
@@ -2428,6 +2505,7 @@ let cage2: Sprite = null
 let princess: Sprite = null
 let statusbar3: StatusBarSprite = null
 let demon: Sprite = null
+let snails: Sprite = null
 let statusbar: StatusBarSprite = null
 let statusbar2: StatusBarSprite = null
 let snails_kill = 0
@@ -2695,6 +2773,9 @@ game.onUpdate(function () {
     } else {
         woodcutter.vy = 200
     }
+    if (woodcutter.tileKindAt(TileDirection.Right, myTiles.tile16)) {
+        woodcutter.x += -0.1
+    }
 })
 game.onUpdate(function () {
     if (snails_kill == 5 && Math.percentChance(5)) {
@@ -2798,9 +2879,10 @@ game.onUpdate(function () {
                 `)
         }
         if (boss_HP <= 0) {
-            EndPlot()
+            tiles.replaceAllTiles(myTiles.tile16, myTiles.transparency16)
             snails.destroy()
             big_snails.destroy()
+            demon.destroy()
             scene.setBackgroundImage(img`
                 88888888888888888888888888883388888888385555558888
                 88888885858188883335558888888833818883858888888888
@@ -2853,8 +2935,12 @@ game.onUpdate(function () {
                 72777222777277772777372227377777773777712273772717
                 77777777277731777772772127777277727772722277777777
                 `)
-            game.over(true, effects.confetti)
         }
+    }
+})
+game.onUpdateInterval(4000, function () {
+    if (Lv == 10 && boss_HP > 50) {
+        boos_mob_set()
     }
 })
 game.onUpdateInterval(500, function () {
@@ -2882,22 +2968,25 @@ game.onUpdateInterval(500, function () {
         fireball.setFlag(SpriteFlag.DestroyOnWall, true)
     }
     if (Lv == 10 && boss_HP <= 50) {
-        projectile3 = sprites.createProjectileFromSprite(img`
-            . . . . . 2 2 . . 
-            . . . . . 2 2 2 . 
-            . . . . 2 2 2 2 . 
-            . . . . 2 2 2 2 . 
-            . . . 2 2 2 2 . . 
-            . . 2 2 2 2 2 . . 
-            . 2 2 2 2 2 2 2 . 
-            . 2 e e e 2 2 2 . 
-            2 2 e e e e e 2 2 
-            2 e e e e e e e 2 
-            2 2 e e e e e e 2 
-            . 2 e e e e e 2 . 
-            . 2 2 e e e 2 2 . 
-            . . . 2 2 2 . . . 
-            `, demon, -50, 0)
-        projectile3.setFlag(SpriteFlag.DestroyOnWall, true)
+        if (!(boss_HP <= 0)) {
+            projectile3 = sprites.createProjectileFromSprite(img`
+                . . . . . 2 2 . . 
+                . . . . . 2 2 2 . 
+                . . . . 2 2 2 2 . 
+                . . . . 2 2 2 2 . 
+                . . . 2 2 2 2 . . 
+                . . 2 2 2 2 2 . . 
+                . 2 2 2 2 2 2 2 . 
+                . 2 e e e 2 2 2 . 
+                2 2 e e e e e 2 2 
+                2 e e e e e e e 2 
+                2 2 e e e e e e 2 
+                . 2 e e e e e 2 . 
+                . 2 2 e e e 2 2 . 
+                . . . 2 2 2 . . . 
+                `, demon, -50, 0)
+            projectile3.z = 1
+            projectile3.setFlag(SpriteFlag.DestroyOnWall, true)
+        }
     }
 })
